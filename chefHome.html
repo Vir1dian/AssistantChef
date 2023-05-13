@@ -6,64 +6,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assistant Chef by Sai & Gavin</title>
     <link rel="stylesheet" href="chefsHat.css">
-    <script type="text/javascript" src="chef.js" defer></script>
+    <script src="chef.js" defer></script>
 </head>
 <body>
     <header>
-        <h2 style="text-align: center;">Assistant Chef [WIP Name]</h2>
+        <h1 style="text-align: center;">Assistant Chef [WIP Name]</h1>
     </header>
 
     <main>
         <div class="prompt">
-            <form action="" class="searchbar">
-                <input type="text" placeholder="What would you like to make?">
+            <form class="searchbar">
+                <input type="text" id= "searchHere" placeholder="What would you like to make?"  onkeyup="search()">
                 <button type="submit" class="searchbutton">Search, or ask Alan!</button>
             </form>
             <!--Search filters will also be added here-->
         </div>
     
-        <section class="recipes">
-            <article>
+        <section class="recipeList">
+            <article class="recipe">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Question_mark_alternate.svg/591px-Question_mark_alternate.svg.png">
-                <div class="recipeTitle">Recipe 1</div>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates sequi culpa molestias minima totam veritatis. Est pariatur perspiciatis doloribus non iure, rerum eos reiciendis quidem laboriosam aut officia, veritatis esse.
-                </p>
+                <h2 class="recipeTitle">Recipe 1</h2>
+                <div class="recipeDetails">
+                    -Ingredient 1.1 <br>
+                    -Ingredient 1.2 <br>
+                    -Ingredient 1.3 <br>
+                </div>
             </article>
-            <article>
+            <article class="recipe">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Question_mark_alternate.svg/591px-Question_mark_alternate.svg.png">
-                <div class="recipeTitle">Recipe 2</div>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates sequi culpa molestias minima totam veritatis. Est pariatur perspiciatis doloribus non iure, rerum eos reiciendis quidem laboriosam aut officia, veritatis esse.
-                </p>
+                <h2 class="recipeTitle">Recipe 2</h2>
+                <div class="recipeDetails">
+                    -Ingredient 2.1 <br>
+                    -Ingredient 2.2 <br>
+                    -Ingredient 2.3 <br>
+                </div>
+                
             </article>
-            <article>
+            <article class="recipe">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Question_mark_alternate.svg/591px-Question_mark_alternate.svg.png">
-                <div class="recipeTitle">Recipe 3</div>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates sequi culpa molestias minima totam veritatis. Est pariatur perspiciatis doloribus non iure, rerum eos reiciendis quidem laboriosam aut officia, veritatis esse.
-                </p>
+                <h2 class="recipeTitle">Recipe 3</h2>
+                <div class="recipeDetails">
+                    -Ingredient 3.1 <br>
+                    -Ingredient 3.2 <br>
+                    -Ingredient 3.3 <br>
+                </div>
             </article>
-            <article>
+            <article class="recipe">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Question_mark_alternate.svg/591px-Question_mark_alternate.svg.png">
-                <div class="recipeTitle">Recipe 4</div>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates sequi culpa molestias minima totam veritatis. Est pariatur perspiciatis doloribus non iure, rerum eos reiciendis quidem laboriosam aut officia, veritatis esse.
-                </p>
+                <h2 class="recipeTitle">Recipe 4</h2>
+                <div class="recipeDetails">
+                    -Ingredient 4.1 <br>
+                    -Ingredient 4.2 <br>
+                    -Ingredient 4.3 <br>
+                </div>
             </article>
-            <article>
+            <article class="recipe">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Question_mark_alternate.svg/591px-Question_mark_alternate.svg.png">
-                <div class="recipeTitle">Recipe 5</div>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates sequi culpa molestias minima totam veritatis. Est pariatur perspiciatis doloribus non iure, rerum eos reiciendis quidem laboriosam aut officia, veritatis esse.
-                </p>
-            </article>
-            <article>
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Question_mark_alternate.svg/591px-Question_mark_alternate.svg.png">
-                <div class="recipeTitle">Recipe 6</div>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates sequi culpa molestias minima totam veritatis. Est pariatur perspiciatis doloribus non iure, rerum eos reiciendis quidem laboriosam aut officia, veritatis esse.
-                </p>
+                <h2 class="recipeTitle">Recipe 5</h2>
+                <div class="recipeDetails">
+                    -Ingredient 5.1 <br>
+                    -Ingredient 5.2 <br>
+                    -Ingredient 5.3 <br>
+                </div>
             </article>
         </section>
 

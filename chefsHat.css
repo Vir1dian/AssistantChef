@@ -36,20 +36,21 @@ header {
     padding: 10px 10px;
     font-size: 18px;
 }
-.recipes {
+.recipeList {
     margin: 5%;
     padding: 10px;
     background-color: antiquewhite;
-    border: thin solid;
+    border-radius: 10px;
 }
-article {
+.recipe {
     border: thin solid;
     padding: 0px 5px;
     margin: 25px;
     background-color: white;
     border-radius: 10px;
+    cursor: pointer;
 }
-img {
+.recipe img {
     width: 50px;
     height: 50px;
     display: block;
@@ -57,6 +58,10 @@ img {
     margin-left: auto;
     margin-right: auto;
 }
+.recipeDetails {
+    margin: 10px 20px;
+    margin-bottom: 20px;
+}
 .recipeTitle {
-    margin: 10px 0;
+    margin: 10px 20px;
 }
