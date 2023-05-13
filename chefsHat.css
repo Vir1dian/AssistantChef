@@ -5,9 +5,58 @@ body{
     margin:0px;
 }
 header {
-    background-color:rgb(235, 255, 239);
+    background-color:rgb(235, 255, 242);
     color:darkslategray;
     margin:0;
     padding: 5px;
-    box-shadow: 0 0 10px darkolivegreen;
+}
+.prompt {
+    margin: 0;
+    display: flex;
+    align-items: right;
+    justify-content: right;
+    position: sticky;
+    top: 0px;
+    background-color: darkslategray;
+    box-shadow: 0 2px 5px black;
+}
+.searchbar {
+    width: 100%;
+    max-width: 450px;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+}
+.searchbar input{
+    flex: 1;
+    padding: 10px 10px;
+    font-size: 18px;
+}
+.searchbutton {
+    padding: 10px 10px;
+    font-size: 18px;
+}
+.recipes {
+    margin: 5%;
+    padding: 10px;
+    background-color: antiquewhite;
+    border: thin solid;
+}
+article {
+    border: thin solid;
+    padding: 0px 5px;
+    margin: 25px;
+    background-color: white;
+    border-radius: 10px;
+}
+img {
+    width: 50px;
+    height: 50px;
+    display: block;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.recipeTitle {
+    margin: 10px 0;
 }
