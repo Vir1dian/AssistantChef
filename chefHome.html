@@ -15,13 +15,23 @@
 
     <main>
         <div class="prompt">
+            <div class="timerControl">
+                <div id="timer" onclick="setTimer()"> 
+                    00:00:00 
+                </div>
+                <input type="text" id= "timerInput" placeholder="Number of seconds here(WIP)" onkeypress="commitTimer()">
+                <button onclick="startTimer()">Start</button>
+                <button onclick="pauseTimer()">Pause</button>
+                <button onclick="resetTimer()">Reset</button>
+            </div>
+
             <form class="searchbar">
                 <input type="text" id= "searchHere" placeholder="What would you like to make?"  onkeyup="search()">
                 <button type="submit" class="searchbutton">Search, or ask Alan!</button>
             </form>
             <!--Search filters will also be added here-->
         </div>
-    
+                 
         <section class="recipeList">
             <article class="recipe">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Question_mark_alternate.svg/591px-Question_mark_alternate.svg.png">
