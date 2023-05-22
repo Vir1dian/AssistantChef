@@ -18,8 +18,7 @@ function search() { //Finds recipes as the user types
 
 var seconds = 300;
 var countingTime = null;
-document.getElementById("timer").innerHTML = "00:05:00";
-var originalTimeShown = document.getElementById("timer").innerHTML;
+secondsToHMS();
 var originalTimeInSeconds = seconds;
 
 
@@ -39,14 +38,7 @@ var originalTimeInSeconds = seconds;
     }
     document.getElementById("timer").innerHTML = hrs + ":" + mins + ":" + secs;
 }*/
-
-function countdown() {
-    if (seconds > 0) {
-        seconds--;
-    } else {
-        pauseTimer();
-        return;
-    }
+function secondsToHMS() {
     let hrs = Math.floor(seconds/3600);
     if (hrs/10 < 1) {
         hrs = "0" + hrs;
@@ -61,18 +53,34 @@ function countdown() {
     }
     document.getElementById("timer").innerHTML = hrs + ":" + mins + ":" + secs;
 }
+function countdown() {
+    if (seconds > 0) {
+        seconds--;
+    } else {
+        pauseTimer();
+        return;
+    }
+    secondsToHMS();
+}
 function setTimer() {
     document.getElementById("timer").style.display = "none";
     document.getElementById("timerInput").style.display = "flex";
 }
 function commitTimer() {
-    if (e.keyCode == 13) {
-        document.getElementById("timer").style.display = "flex";
-        document.getElementById("timerInput").style.display = "none";
-    }
-    //WIP
+    let jssetTime = document.getElementById("timerInput");
+    jssetTime.addEventListener("keydown", (e) => {
+        if (e.key == "Enter"){
+            seconds = jssetTime.value;
+            originalTimeInSeconds = seconds;
+            secondsToHMS();
+            document.getElementById("timer").style.display = "flex";
+            document.getElementById("timerInput").style.display = "none";
+        }
+    });
 }
 function startTimer() {
+    document.getElementById("timer").style.display = "flex";
+    document.getElementById("timerInput").style.display = "none";
     if (countingTime) {
         return;
     }
@@ -85,6 +93,6 @@ function pauseTimer() {
 function resetTimer() {
     clearInterval(countingTime);
     countingTime = null;
-    document.getElementById("timer").innerHTML = originalTimeShown;
     seconds = originalTimeInSeconds;
+    secondsToHMS();
 }
