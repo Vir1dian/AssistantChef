@@ -24,19 +24,7 @@ var originalTimeInSeconds = seconds;
 
 /*function countup() {
     seconds++;
-    let hrs = Math.floor(seconds/3600);
-    if (hrs/10 < 1) {
-        hrs = "0" + hrs;
-    }
-    let mins = Math.floor(seconds/60) % 60;
-    if (mins/10 < 1) {
-        mins = "0" + mins;
-    }
-    let secs = seconds % 60;
-    if (secs/10 < 1) {
-        secs = "0" + secs;
-    }
-    document.getElementById("timer").innerHTML = hrs + ":" + mins + ":" + secs;
+    secondsToHMS();
 }*/
 function secondsToHMS() {
     let hrs = Math.floor(seconds/3600);

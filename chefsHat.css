@@ -1,6 +1,9 @@
 * {
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
+html {
+    overflow-y:scroll;
+}
 body{
     margin:0px;
 }
@@ -21,7 +24,7 @@ header {
     margin-left: 20px;
     margin-right: auto;
     align-self: center;
-    width: 400px;
+    max-width: 300px;
 }
 .timerControl button {
     margin: 1px;
@@ -35,17 +38,20 @@ header {
     cursor: pointer;
     display: flex;
 }
+#timer:hover {
+    color: rgb(0, 255, 191);
+}
 #timerInput {
     display: none;
 }
-.prompt {
+nav {
     margin: 0;
     display: flex;
     justify-content: space-between;
     position: sticky;
     top: 0px;
     background-color: darkslategray;
-    box-shadow: 0 2px 5px black;
+    box-shadow: 0 2px 5px gray;
 }
 .searchbar {
     width: 100%;
@@ -65,24 +71,42 @@ header {
     user-select: none;
     cursor: pointer;
 }
+
+
+
+
+aside {
+    width: 25%;
+    min-width: 0;
+    float: right;
+    background-color: whitesmoke;
+    margin: 50px 2.5%;
+    border: grey solid 1px;
+}
+aside div {
+    margin: 10px;
+    border: grey solid 1px;
+}
+
+
+
+
 .recipeList {
-    margin: 5%;
-    padding: 10px;
-    background-color:rgb(217, 248, 220);
-    border-radius: 10px;
+    margin-top: 50px;
+    background-color:white;
+    width: 70%;
 }
 .recipe {
-    border: thin solid;
+    border: rgb(173, 173, 173) thin solid;
     padding: 0px 5px;
     margin: 25px;
     background-color: white;
-    border-radius: 10px;
     cursor: pointer;
-    box-shadow: 0 2px 3px grey;
+    box-shadow: 0 1px 1px grey;
 }
 .recipe img {
     width: 50px;
-    height: 50px;
+    height: 75px;
     display: block;
     margin-top: 10px;
     margin-left: auto;

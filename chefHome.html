@@ -13,25 +13,50 @@
         <h1 style="text-align: center;">Assistant Chef [WIP Name]</h1>
     </header>
 
-    <main>
-        <div class="prompt">
-            <div class="timerControl">
-                <div id="timer" onclick="setTimer()"> 
-                    00:00:00 
-                </div>
-                <input type="number" id= "timerInput" placeholder="Number of SECONDS" onkeypress="commitTimer()">
-                <button onclick="startTimer()">Start</button>
-                <button onclick="pauseTimer()">Pause</button>
-                <button onclick="resetTimer()">Reset</button>
+    <nav class>
+        <div class="timerControl">
+            <div id="timer" onclick="setTimer()"> 
+                00:00:00 
             </div>
-
-            <form class="searchbar">
-                <input type="text" id= "searchHere" placeholder="What would you like to make?"  onkeyup="search()">
-                <button type="submit" class="searchbutton">Search, or ask Alan!</button>
-            </form>
-            <!--Search filters will also be added here-->
+            <input type="number" id= "timerInput" placeholder="Number of SECONDS" onkeypress="commitTimer()">
+            <button onclick="startTimer()">Start</button>
+            <button onclick="pauseTimer()">Pause</button>
+            <button onclick="resetTimer()">Reset</button>
         </div>
-                 
+
+        <form class="searchbar">
+            <input type="text" id= "searchHere" placeholder="What would you like to make?"  onkeyup="search()">
+            <button type="submit" class="searchbutton">Search, or ask Alan!</button>
+        </form>
+
+        <!--Search filters will also be added here-->
+    </nav>
+
+    <aside>
+        <div>
+            Add tags: _____ <br>
+        </div>
+        <div>
+            Favorite tags: <br>
+            -Wheat <br>
+            -Latin American <br>
+
+        </div>
+        <div>
+            Find by cuisine: <br>
+            -Mediterranean <br>
+            -South Asian <br>
+            -Latin American <br>
+        </div>
+        <div>
+            Find by ingredient: <br>
+            -Wheat <br>
+            -Rice <br>
+            -Beans <br>
+        </div>
+    </aside>
+
+    <main>  
         <section class="recipeList">
             <article class="recipe">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Question_mark_alternate.svg/591px-Question_mark_alternate.svg.png">
