@@ -1,5 +1,6 @@
 * {
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: normal;
 }
 html {
     overflow-y:scroll;
@@ -87,6 +88,30 @@ aside div {
     margin: 10px;
     border: grey solid 1px;
 }
+aside div h3 {
+    margin: 5px 5px;
+    font-weight: bold;
+}
+#findTagsInput {
+    margin: 10px 10px;
+    font-size: 18px;
+}
+.filterClass {
+    padding: 3px;
+    display: flex;
+}
+.filterClass h4 {
+    margin: 0 0;
+    display: block;
+}
+.filterClass button {
+    display: none;
+    margin: 2px;
+}
+.filterClass:hover button {
+    display: block;
+}
+
 
 
 

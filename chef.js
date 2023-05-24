@@ -1,8 +1,9 @@
+
 function search() { //Finds recipes as the user types
-    let find = document.getElementById("searchHere").value.toUpperCase();
+    let find = document.getElementById("searchInput").value.toUpperCase();
     let recipeItem = document.querySelectorAll(".recipe");
     let recipeName = document.getElementsByTagName("h2");
-    for (var i = 0; i < recipeName.length; i++){
+    for (let i = 0; i < recipeName.length; i++){
         let result = recipeItem[i].getElementsByTagName("h2")[0];
 
         if(result){
@@ -15,6 +16,7 @@ function search() { //Finds recipes as the user types
         }
     }
 }
+
 
 var seconds = 300;
 var countingTime = null;

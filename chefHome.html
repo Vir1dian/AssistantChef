@@ -7,6 +7,7 @@
     <title>Assistant Chef by Sai & Gavin</title>
     <link rel="stylesheet" href="chefsHat.css">
     <script src="chef.js" defer></script>
+    <script src="chefFilters.js" defer></script>
 </head>
 <body>
     <header>
@@ -25,34 +26,31 @@
         </div>
 
         <form class="searchbar">
-            <input type="text" id= "searchHere" placeholder="What would you like to make?"  onkeyup="search()">
+            <input type="text" id= "searchInput" placeholder="Find a SPECIFIC recipe" onkeyup="search()">
             <button type="submit" class="searchbutton">Search, or ask Alan!</button>
         </form>
-
-        <!--Search filters will also be added here-->
     </nav>
 
+    <!--Limit given filters to 8 or 10, hide other available tags-->
     <aside>
         <div>
-            Add tags: _____ <br>
-        </div>
-        <div>
-            Favorite tags: <br>
-            -Wheat <br>
-            -Latin American <br>
+            <h3>What do you want to make?</h3>
+            <input type="text" id= "findTagsInput" placeholder="Find other TAGS here" onkeyup="findTag()">
+            <!--
+                <input type="text" id= "addTagsInput" placeholder="Add new TAGS here" onkeypress="addTag()">
+                <select id="categories">
 
+                </select>
+            -->
         </div>
-        <div>
-            Find by cuisine: <br>
-            -Mediterranean <br>
-            -South Asian <br>
-            -Latin American <br>
+        <div class="favoriteTags">
+            <h3>Favorite tags:</h3>
         </div>
-        <div>
-            Find by ingredient: <br>
-            -Wheat <br>
-            -Rice <br>
-            -Beans <br>
+        <div class="cuisineTags">
+            <h3>Find by cuisine:</h3>
+        </div>
+        <div class="ingredientTags">
+            <h3>Find by ingredient:</h3>
         </div>
     </aside>
 
