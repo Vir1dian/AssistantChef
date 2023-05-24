@@ -1,3 +1,22 @@
+////////////////////////////////////////////
+//SEARCH FILTERS AKA TAGS
+function findTag() {
+    let find = document.getElementById("findTagsInput").value.toUpperCase();
+    let filterItem = document.querySelectorAll(".filterClass");
+    let filterName = document.getElementsByTagName("h4");
+    for (let i = 0; i < filterName.length; i++){
+        let result = filterItem[i].getElementsByTagName("h4")[0];
+
+        if(result){
+            let value = result.innerHTML || result.textContent;
+            if(value.toUpperCase().indexOf(find) > -1){
+                filterItem[i].style.display="";
+            }else{
+                filterItem[i].style.display="none";
+            }
+        }
+    }
+}
 /////////////////////////////////////////
 //FAVORITES CATEGORY
 const favoriteFilters = document.querySelector(".favoriteTags");
@@ -10,11 +29,28 @@ for (let i = 0; i < 2; i++) {
 }
 ////////////////////////////////////////////
 //APPLIANCE CATEGORY (WIP)
-
-
+const applianceFilters = document.querySelector(".applianceTags");
+let applianceContainer = [];
+let appliances = ['Oven', 'Oventop', 'Microwave', 'Airfryer', 'Steamer', 'Pressure Cooker', 'Rice Cooker'];
+for (let i = 0; i < appliances.length; i++) {
+    applianceContainer[i] = document.createElement("div");
+    applianceContainer[i].classList.add("filterClass", "applianceFilterClass");
+    applianceContainer[i].innerHTML += "<h4>" + appliances[i] + "</h4>" + "<button>Include</button>" + "<button>Exclude</button>" + "<button>Add to Favorites</button>";
+    applianceFilters.appendChild(applianceContainer[i]);
+    if (i >= 5){
+        applianceContainer[i].style.display="none";
+    }
+}
+if (appliances.length > 5){
+    var unshownAppliancesCount = document.createElement("div");
+    applianceFilters.appendChild(unshownAppliancesCount);
+    unshownAppliancesCount.innerText = "+ " + (appliances.length - 5) + " more";
+    unshownAppliancesCount.style.fontWeight = "bold";
+}
 ////////////////////////////////////////////
 //TIME CATEGORY (WIP)
 
+//Something involving numbers instead of strings
 
 ////////////////////////////////////////////
 //INGREDIENT CATEGORY
@@ -56,31 +92,6 @@ if (cuisines.length > 5){
     unshownCuisinesCount.innerText = "+ " + (cuisines.length - 5) + " more";
     unshownCuisinesCount.style.fontWeight = "bold";
 }
-
-
-
-////////////////////////////////////////////
-//SEARCH FILTERS AKA TAGS
-function findTag() {
-    let find = document.getElementById("findTagsInput").value.toUpperCase();
-    let filterItem = document.querySelectorAll(".filterClass");
-    let filterName = document.getElementsByTagName("h4");
-    for (let i = 0; i < filterName.length; i++){
-        let result = filterItem[i].getElementsByTagName("h4")[0];
-
-        if(result){
-            let value = result.innerHTML || result.textContent;
-            if(value.toUpperCase().indexOf(find) > -1){
-                filterItem[i].style.display="";
-            }else{
-                filterItem[i].style.display="none";
-            }
-        }
-    }
-    unshownCuisinesCount.style.display="none";
-    unshownIngredientsCount.style.display="none";
-}
-
 
 
 

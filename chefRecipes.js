@@ -1,4 +1,5 @@
-function search() { //Finds recipes as the user types
+//Finds recipes as the user types into the searchbar for specific recipes
+function search() { 
     let find = document.getElementById("searchInput").value.toUpperCase();
     let recipeItem = document.querySelectorAll(".recipe");
     let recipeName = document.getElementsByTagName("h2");
@@ -16,30 +17,39 @@ function search() { //Finds recipes as the user types
     }
 }
 
+//Add new recipes HERE
 const recipeArticles = [
     {
         dish: 'Cheese Pizza',
-        filterTags: 'American, Oven, Milk, Flour',
+        filterTags: ['American', 'Oven', 'Milk', 'Flour'],
         thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Question_mark_alternate.svg/591px-Question_mark_alternate.svg.png',
         ingredients: 'x, y, z',
         instructions: 'do a, b, then c'
     },
     {
         dish: 'Cereal',
-        filterTags: 'Milk, Corn',
+        filterTags: ['Milk', 'Corn'],
         thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Question_mark_alternate.svg/591px-Question_mark_alternate.svg.png',
         ingredients: 'Milk (1 1/2 cups), Corn Flakes (2 cups)',
         instructions: '1. Add dry corn flakes onto a small bowl. 2. Pour milk onto small bowl. 3. Serve with spoon.'
     },
     {
         dish: 'Fried Rice',
-        filterTags: 'Chinese, Rice Cooker, Saute Pan, White Rice, Butter, Eggs, Garlic, Soy Sauce, Veggies',
+        filterTags: ['Chinese', 'Rice Cooker', 'Saute Pan', 'White Rice', 'Butter', 'Eggs', 'Garlic', 'Soy Sauce', 'Veggies'],
         thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Question_mark_alternate.svg/591px-Question_mark_alternate.svg.png',
         ingredients: 'White Rice (cooked and chilled), Butter (3 tablespoons), Eggs (3), Garlic (6 cloves), Soy sauce (2 tsp), Carrots, Onions, Green Onions, Peas',
         instructions: '1. Scramble eggs on a saute pan, breaking them into small pieces then set aside. 2. Saute veggies and garlic on the same pan until soft and cooked through. 3. Melt the remaining butter on the pan, then add rice and soy sauce. 4. Remove pan from heat and add green onions and scrambled eggs. 5. Taste, season, serve.'
+    },
+    {
+        dish: 'Popcorn',
+        filterTags: ['American', 'Microwave'],
+        thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Popcorn.svg/1200px-Popcorn.svg.png',
+        ingredients: 'instant popcorn',
+        instructions: 'xyz'
     }
 ]
 
+//Converts recipeArticles array into html elements injected into the recipes section of the website
 const recipeArticleWebList = document.querySelector(".recipeList");
 let recipesContainer = [];
 for (let i = 0; i < recipeArticles.length; i++) {
@@ -48,7 +58,7 @@ for (let i = 0; i < recipeArticles.length; i++) {
     recipesContainer[i].innerHTML += 
         "<h2>" + recipeArticles[i].dish + 
         "</h2><div class=\"articleDetails articleFilterTags\">" + 
-            recipeArticles[i].filterTags + 
+            //recipeArticles[i].filterTags + 
         "</div><img class=\"articleDetails articleThumbmnail\" src=\"" + 
             recipeArticles[i].thumbnail + 
         "\"><div class=\"articleDetails articleIngredients\">" + 
@@ -58,4 +68,12 @@ for (let i = 0; i < recipeArticles.length; i++) {
         "</div>"
         ;
     recipeArticleWebList.appendChild(recipesContainer[i]);
+    
+    let filterTagsCurrent = document.querySelectorAll(".articleFilterTags");
+    let filterTagsContainer = [];
+    for (let j = 0; j < recipeArticles[i].filterTags.length; j++) {
+        filterTagsContainer[j] = document.createElement("div");
+        filterTagsContainer[j].innerText = recipeArticles[i].filterTags[j];
+        filterTagsCurrent[i].appendChild(filterTagsContainer[j]);
+    }
 }
