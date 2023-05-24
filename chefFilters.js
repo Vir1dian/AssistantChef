@@ -1,3 +1,5 @@
+/////////////////////////////////////////
+//FAVORITES CATEGORY
 const favoriteFilters = document.querySelector(".favoriteTags");
 let favoritesContainer = [];
 for (let i = 0; i < 2; i++) {
@@ -6,7 +8,36 @@ for (let i = 0; i < 2; i++) {
     favoritesContainer[i].innerHTML += "<h4>Favorite " + (1 + i) + "</h4>" + "<button>Include</button>" + "<button>Exclude</button>" + "<button>Remove from Favorites</button>";
     favoriteFilters.appendChild(favoritesContainer[i]);
 }
+////////////////////////////////////////////
+//APPLIANCE CATEGORY (WIP)
 
+
+////////////////////////////////////////////
+//TIME CATEGORY (WIP)
+
+
+////////////////////////////////////////////
+//INGREDIENT CATEGORY
+const ingredientFilters = document.querySelector(".ingredientTags");
+let ingredientContainer = [];
+let ingredients = ['Sugar', 'Milk', 'Salt', 'Chicken', 'Olive Oil', 'Soy Sauce', 'Vinegar', 'Eggs', 'Flour'];
+for (let i = 0; i < ingredients.length; i++) {
+    ingredientContainer[i] = document.createElement("div");
+    ingredientContainer[i].classList.add("filterClass", "ingredientFilterClass");
+    ingredientContainer[i].innerHTML += "<h4>" + ingredients[i] + "</h4>" + "<button>Include</button>" + "<button>Exclude</button>" + "<button>Add to Favorites</button>";
+    ingredientFilters.appendChild(ingredientContainer[i]);
+    if (i >= 5){
+        ingredientContainer[i].style.display="none";
+    }
+}
+if (ingredients.length > 5){
+    var unshownIngredientsCount = document.createElement("div");
+    ingredientFilters.appendChild(unshownIngredientsCount);
+    unshownIngredientsCount.innerText = "+ " + (ingredients.length - 5) + " more";
+    unshownIngredientsCount.style.fontWeight = "bold";
+}
+////////////////////////////////////////////
+//CUISINE CATEGORY
 const cuisineFilters = document.querySelector(".cuisineTags");
 let cuisineContainer = [];
 let cuisines = ['American', 'Chinese', 'Filipino', 'French', 'Greek', 'Hawaiian', 'Indian', 'Japanese', 'Korean', 'Spanish'];
@@ -20,30 +51,16 @@ for (let i = 0; i < cuisines.length; i++) {
     }
 }
 if (cuisines.length > 5){
-    let unshownCuisinesCount = document.createElement("div");
+    var unshownCuisinesCount = document.createElement("div");
     cuisineFilters.appendChild(unshownCuisinesCount);
     unshownCuisinesCount.innerText = "+ " + (cuisines.length - 5) + " more";
+    unshownCuisinesCount.style.fontWeight = "bold";
 }
 
 
-const ingredientFilters = document.querySelector(".ingredientTags");
-let ingredientContainer = [];
-let ingredients = ['Sugar', 'Milk', 'Salt', 'Chicken', 'Olive Oil', 'Soy Sauce', 'Vinegar'];
-for (let i = 0; i < ingredients.length; i++) {
-    ingredientContainer[i] = document.createElement("div");
-    ingredientContainer[i].classList.add("filterClass", "ingredientFilterClass");
-    ingredientContainer[i].innerHTML += "<h4>" + ingredients[i] + "</h4>" + "<button>Include</button>" + "<button>Exclude</button>" + "<button>Add to Favorites</button>";
-    ingredientFilters.appendChild(ingredientContainer[i]);
-    if (i >= 5){
-        ingredientContainer[i].style.display="none";
-    }
-}
-if (ingredients.length > 5){
-    let unshownIngredientsCount = document.createElement("div");
-    ingredientFilters.appendChild(unshownIngredientsCount);
-    unshownIngredientsCount.innerText = "+ " + (ingredients.length - 5) + " more";
-}
 
+////////////////////////////////////////////
+//SEARCH FILTERS AKA TAGS
 function findTag() {
     let find = document.getElementById("findTagsInput").value.toUpperCase();
     let filterItem = document.querySelectorAll(".filterClass");
@@ -60,7 +77,10 @@ function findTag() {
             }
         }
     }
+    unshownCuisinesCount.style.display="none";
+    unshownIngredientsCount.style.display="none";
 }
+
 
 
 
