@@ -92,8 +92,12 @@ aside div h3 {
     margin: 5px 5px;
     font-weight: bold;
 }
+aside h3 {
+    margin: 5px 10px;
+    font-weight: bold;
+}
 #findTagsInput {
-    margin: 10px 10px;
+    margin: 5px 10px;
     font-size: 18px;
 }
 .filterClass {
@@ -110,7 +114,18 @@ aside div h3 {
 }
 .filterClass:hover button {
     display: block;
+    cursor: pointer;
 }
+.otherTags {
+    max-height: 230px;
+    overflow-y: scroll;
+}
+.favoriteTags {
+    display: none;
+}
+
+
+
 .articleFilterTags {
     justify-content: left;
     display: flex;
@@ -122,10 +137,6 @@ aside div h3 {
     padding-right: 5px;
     margin-right: 2px;
 }
-
-
-
-
 .recipeList {
     margin-top: 50px;
     background-color:white;
@@ -136,16 +147,12 @@ aside div h3 {
     padding: 0px 5px;
     margin: 25px;
     background-color: white;
-    cursor: pointer;
     box-shadow: 0 1px 1px grey;
 }
 .recipe img {
-    width: 50px;
-    height: 75px;
+    max-height: 300px;
     display: block;
     margin-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
 }
 .articleDetails {
     margin: 10px 20px;

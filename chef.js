@@ -1,14 +1,11 @@
+
+
 var seconds = 300;
 var countingTime = null;
-secondsToHMS();
+secondsToHMSforTimer();
 var originalTimeInSeconds = seconds;
 
-
-/*function countup() {
-    seconds++;
-    secondsToHMS();
-}*/
-function secondsToHMS() {
+function secondsToHMSforTimer() {
     let hrs = Math.floor(seconds/3600);
     if (hrs/10 < 1) {
         hrs = "0" + hrs;
@@ -23,6 +20,10 @@ function secondsToHMS() {
     }
     document.getElementById("timer").innerHTML = hrs + ":" + mins + ":" + secs;
 }
+function countup() {
+    seconds++;
+    secondsToHMSforTimer();
+}
 function countdown() {
     if (seconds > 0) {
         seconds--;
@@ -30,7 +31,7 @@ function countdown() {
         pauseTimer();
         return;
     }
-    secondsToHMS();
+    secondsToHMSforTimer();
 }
 function setTimer() {
     document.getElementById("timer").style.display = "none";
@@ -42,7 +43,7 @@ function commitTimer() {
         if (e.key == "Enter"){
             seconds = jssetTime.value;
             originalTimeInSeconds = seconds;
-            secondsToHMS();
+            secondsToHMSforTimer();
             document.getElementById("timer").style.display = "flex";
             document.getElementById("timerInput").style.display = "none";
         }
@@ -64,5 +65,15 @@ function resetTimer() {
     clearInterval(countingTime);
     countingTime = null;
     seconds = originalTimeInSeconds;
-    secondsToHMS();
+    secondsToHMSforTimer();
 }
+
+var alanBtnInstance = alanBtn({
+    key: "6915d0b78830b6418aaeed56891e1b6a2e956eca572e1d8b807a3e2338fdd0dc/stage",
+    onCommand: function (commandData) {
+    if (commandData.command === "go:back") {
+        //call client code that will react on the received command
+    }
+    },
+    rootEl: document.getElementById("alan-btn"),
+});
