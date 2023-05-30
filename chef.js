@@ -74,6 +74,9 @@ var alanBtnInstance = alanBtn({
     if (commandData.command === "go:back") {
         //call client code that will react on the received command
     }
+    if (commandData.command === "search") {
+        
+    }
     },
     rootEl: document.getElementById("alan-btn"),
 });

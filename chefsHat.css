@@ -18,7 +18,7 @@ header {
     display: flex;
     justify-content: center;
     background-color: white;
-    border: thin solid gray;
+    border: thin solid gray; 
     padding: 5px;
     font-size: 20px;
     color:gray;
@@ -96,9 +96,13 @@ aside h3 {
     margin: 5px 10px;
     font-weight: bold;
 }
-#findTagsInput {
+.tagsInput {
     margin: 5px 10px;
     font-size: 18px;
+    width: 50%;
+}
+#tagCategories {
+    margin-bottom: 10px;
 }
 .filterClass {
     padding: 3px;

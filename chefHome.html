@@ -12,7 +12,7 @@
 </head>
 <body>
     <header>
-        <h1 style="text-align: center;">Assistant Chef [WIP Name]</h1>
+        <h1 style="text-align: center;">Assistant Chef - Made by Gavin and Sai</h1>
     </header>
 
     <nav class>
@@ -20,29 +20,31 @@
             <div id="timer" onclick="setTimer()"> 
                 00:00:00 
             </div>
-            <input type="number" id= "timerInput" placeholder="Number of SECONDS" onkeypress="commitTimer()">
+            <input type="number" id= "timerInput" placeholder="Number of SECONDS (press enter)" onkeypress="commitTimer()">
             <button onclick="startTimer()">Start</button>
             <button onclick="pauseTimer()">Pause</button>
             <button onclick="resetTimer()">Reset</button>
         </div>
 
         <form class="searchbar">
-            <input type="text" id= "searchInput" placeholder="Find a SPECIFIC recipe" onkeyup="search()">
+            <input type="text" id= "searchInput" placeholder="Find a SPECIFIC recipe (type only)" onkeyup="search()">
             <button type="submit" class="searchbutton">Search, or ask Alan!</button>
         </form>
     </nav>
 
-    <!--Limit given filters to 8 or 10, hide other available tags-->
     <aside>
         <div>
             <h3>What do you want to make?</h3>
-            <input type="text" id= "findTagsInput" placeholder="Find other TAGS here" onkeyup="findTag()">
-            <!--
-                <input type="text" id= "addTagsInput" placeholder="Add new TAGS here" onkeypress="addTag()">
-                <select id="categories">
-
+            <input type="text" id= "findTagsInput" class="tagsInput" placeholder="FIND tags (type only)" onkeyup="findTag()">
+            
+                <input type="text" id= "addTagsInput" class="tagsInput" placeholder="ADD tags (press enter)" onkeypress="addNewTag()">
+                <label for="tagCategories">Add as:</label>
+                <select name="tagCategories" id="tagCategories">
+                    <option value="appliance">Appliance</option>
+                    <option value="ingredient">Ingredient</option>
+                    <option value="cuisine">Cuisine</option>
                 </select>
-            -->
+            
         </div>
         
         <div class="favoriteTags"><h3>Favorite tags:</h3></div>
