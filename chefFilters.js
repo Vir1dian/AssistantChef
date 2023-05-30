@@ -69,32 +69,27 @@ let favoritesContainer = [];
 for (let i = 0; i < 2; i++) {
     favoritesContainer[i] = document.createElement("div");
     favoritesContainer[i].classList.add("filterClass", "favoriteFilterClass");
-    favoritesContainer[i].innerHTML += "<h4>Favorite " + (1 + i) + "</h4>" + "<button>Include</button>" + "<button>Exclude</button>" + "<button>Remove from Favorites</button>";
+    favoritesContainer[i].innerHTML += "<h4>Favorite " + (1 + i) + "</h4>" + "<button class=\"includeButton\">Include</button>" + "<button class=\"excludeButton\">Exclude</button>" + "<button>Remove from Favorites</button>";
     favoriteFilter.appendChild(favoritesContainer[i]);
 }
 
 const applianceFilter = document.querySelector(".applianceTags");
 let applianceContainer = [];
-let appliances = ['Oven', 'Oventop', 'Microwave', 'Airfryer', 'Steamer', 'Pressure Cooker', 'Rice Cooker'];
+let appliances = ['Oven', 'Oventop', 'Microwave', 'Airfryer', 'Steamer', 'Pressure Cooker', 'Rice Cooker', 'Toaster'];
 for (let i = 0; i < appliances.length; i++) {
     applianceContainer[i] = document.createElement("div");
     applianceContainer[i].classList.add("filterClass", "applianceFilterClass");
-    applianceContainer[i].innerHTML += "<h4>" + appliances[i] + "</h4>" + "<button>Include</button>" + "<button>Exclude</button>" /*+ "<button>Add to Favorites</button>"*/;
+    applianceContainer[i].innerHTML += "<h4>" + appliances[i] + "</h4>" + "<button class=\"includeButton\">Include</button>" + "<button class=\"excludeButton\">Exclude</button>" /*+ "<button>Add to Favorites</button>"*/;
     applianceFilter.appendChild(applianceContainer[i]);
 }
-/*
-applianceContainer[appliances.length] = document.createElement("div");
-applianceContainer[appliances.length].classList.add("filterClass", "applianceFilterClass");
-applianceContainer[appliances.length].innerHTML += "<h4>" + appliances.length + "</h4>" + "<button>Include</button>" + "<button>Exclude</button>" + "<button>Add to Favorites</button>";
-*/
 
 const ingredientFilter = document.querySelector(".ingredientTags");
 let ingredientContainer = [];
-let ingredients = ['Sugar', 'Milk', 'Salt', 'Chicken', 'Olive Oil', 'Soy Sauce', 'Vinegar', 'Eggs', 'Flour', 'Veggies', 'Rice'];
+let ingredients = ['Sugar', 'Milk', 'Salt', 'Chicken', 'Olive Oil', 'Soy Sauce', 'Vinegar', 'Eggs', 'Flour', 'Veggies', 'Rice', 'Water', 'Chili Flakes', 'Black Pepper', 'Seaweed', 'Veggies'];
 for (let i = 0; i < ingredients.length; i++) {
     ingredientContainer[i] = document.createElement("div");
     ingredientContainer[i].classList.add("filterClass", "ingredientFilterClass");
-    ingredientContainer[i].innerHTML += "<h4>" + ingredients[i] + "</h4>" + "<button>Include</button>" + "<button>Exclude</button>" /*+ "<button>Add to Favorites</button>"*/;
+    ingredientContainer[i].innerHTML += "<h4>" + ingredients[i] + "</h4>" + "<button class=\"includeButton\">Include</button>" + "<button class=\"excludeButton\">Exclude</button>" /*+ "<button>Add to Favorites</button>"*/;
     ingredientFilter.appendChild(ingredientContainer[i]);
 }
 const cuisineFilter = document.querySelector(".cuisineTags");
@@ -103,7 +98,7 @@ let cuisines = ['American', 'Chinese', 'Filipino', 'French', 'Greek', 'Hawaiian'
 for (let i = 0; i < cuisines.length; i++) {
     cuisineContainer[i] = document.createElement("div");
     cuisineContainer[i].classList.add("filterClass", "cuisineFilterClass");
-    cuisineContainer[i].innerHTML += "<h4>" + cuisines[i] + "</h4>" + "<button>Include</button>" + "<button>Exclude</button>" /*+ "<button>Add to Favorites</button>"*/;
+    cuisineContainer[i].innerHTML += "<h4>" + cuisines[i] + "</h4>" + "<button class=\"includeButton\">Include</button>" + "<button class=\"excludeButton\">Exclude</button>" /*+ "<button>Add to Favorites</button>"*/;
     cuisineFilter.appendChild(cuisineContainer[i]);
 }
 

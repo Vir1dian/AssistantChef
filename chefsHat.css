@@ -121,11 +121,11 @@ aside h3 {
     cursor: pointer;
 }
 .otherTags {
-    max-height: 230px;
+    max-height: 200px;
     overflow-y: scroll;
 }
 .favoriteTags {
-    display: none;
+    color:red;
 }
 
 
@@ -133,13 +133,17 @@ aside h3 {
 .articleFilterTags {
     justify-content: left;
     display: flex;
+    flex-wrap: wrap;
 }
 .articleFilterTags div {
     border: grey solid 1px;
     border-radius: 5px;
     padding-left: 5px;
     padding-right: 5px;
-    margin-right: 2px;
+    margin-right: 4px;
+    margin-bottom: 4px;
+    min-width: auto;
+    white-space: nowrap;
 }
 .recipeList {
     margin-top: 50px;
