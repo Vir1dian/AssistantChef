@@ -78,7 +78,7 @@ nav {
 
 aside {
     width: 25%;
-    min-width: 0;
+    min-width: 200px;
     float: right;
     background-color: whitesmoke;
     margin: 50px 2.5%;
@@ -127,6 +127,9 @@ aside h3 {
 .favoriteTags {
     color:red;
 }
+.customCookingTime {
+    color: red;
+}
 
 
 
@@ -159,8 +162,11 @@ aside h3 {
 }
 .recipe img {
     max-height: 300px;
+    max-width: 100%;
     display: block;
     margin-top: 10px;
+    height: auto;
+    width: auto;
 }
 .articleDetails {
     margin: 10px 20px;

@@ -65,41 +65,45 @@ function findTag() {
 }
 
 const favoriteFilter = document.querySelector(".favoriteTags");
-let favoritesContainer = [];
+let favoritesContainer = []; //Acts as a nodelist (not to be confused with an array) to contain div elements created by the following for-loop
 for (let i = 0; i < 2; i++) {
     favoritesContainer[i] = document.createElement("div");
     favoritesContainer[i].classList.add("filterClass", "favoriteFilterClass");
     favoritesContainer[i].innerHTML += "<h4>Favorite " + (1 + i) + "</h4>" + "<button class=\"includeButton\">Include</button>" + "<button class=\"excludeButton\">Exclude</button>" + "<button>Remove from Favorites</button>";
-    favoriteFilter.appendChild(favoritesContainer[i]);
+    favoriteFilter.appendChild(favoritesContainer[i]); 
+    //Each element in the "-container" nodelist is appended into the html file, inside the div with the class selected by the querySelector at the initial line of this chunk of code
 }
 
 const applianceFilter = document.querySelector(".applianceTags");
-let applianceContainer = [];
+let applianceContainer = []; //Acts as a nodelist (not to be confused with an array) to contain div elements created by the following for-loop
 let appliances = ['Oven', 'Oventop', 'Microwave', 'Airfryer', 'Steamer', 'Pressure Cooker', 'Rice Cooker', 'Toaster'];
 for (let i = 0; i < appliances.length; i++) {
     applianceContainer[i] = document.createElement("div");
     applianceContainer[i].classList.add("filterClass", "applianceFilterClass");
     applianceContainer[i].innerHTML += "<h4>" + appliances[i] + "</h4>" + "<button class=\"includeButton\">Include</button>" + "<button class=\"excludeButton\">Exclude</button>" /*+ "<button>Add to Favorites</button>"*/;
     applianceFilter.appendChild(applianceContainer[i]);
+    //Each element in the "-container" nodelist is appended into the html file, inside the div with the class selected by the querySelector at the initial line of this chunk of code
 }
 
 const ingredientFilter = document.querySelector(".ingredientTags");
-let ingredientContainer = [];
+let ingredientContainer = []; //Acts as a nodelist (not to be confused with an array) to contain div elements created by the following for-loop
 let ingredients = ['Sugar', 'Milk', 'Salt', 'Chicken', 'Olive Oil', 'Soy Sauce', 'Vinegar', 'Eggs', 'Flour', 'Veggies', 'Rice', 'Water', 'Chili Flakes', 'Black Pepper', 'Seaweed', 'Veggies'];
 for (let i = 0; i < ingredients.length; i++) {
     ingredientContainer[i] = document.createElement("div");
     ingredientContainer[i].classList.add("filterClass", "ingredientFilterClass");
     ingredientContainer[i].innerHTML += "<h4>" + ingredients[i] + "</h4>" + "<button class=\"includeButton\">Include</button>" + "<button class=\"excludeButton\">Exclude</button>" /*+ "<button>Add to Favorites</button>"*/;
     ingredientFilter.appendChild(ingredientContainer[i]);
+    //Each element in the "-container" nodelist is appended into the html file, inside the div with the class selected by the querySelector at the initial line of this chunk of code
 }
 const cuisineFilter = document.querySelector(".cuisineTags");
-let cuisineContainer = [];
+let cuisineContainer = []; //Acts as a nodelist (not to be confused with an array) to contain div elements created by the following for-loop
 let cuisines = ['American', 'Chinese', 'Filipino', 'French', 'Greek', 'Hawaiian', 'Indian', 'Italian', 'Japanese', 'Korean', 'Spanish'];
 for (let i = 0; i < cuisines.length; i++) {
     cuisineContainer[i] = document.createElement("div");
     cuisineContainer[i].classList.add("filterClass", "cuisineFilterClass");
     cuisineContainer[i].innerHTML += "<h4>" + cuisines[i] + "</h4>" + "<button class=\"includeButton\">Include</button>" + "<button class=\"excludeButton\">Exclude</button>" /*+ "<button>Add to Favorites</button>"*/;
     cuisineFilter.appendChild(cuisineContainer[i]);
+    //Each element in the "-container" nodelist is appended into the html file, inside the div with the class selected by the querySelector at the initial line of this chunk of code
 }
 
 function addNewTag() {
@@ -107,9 +111,11 @@ function addNewTag() {
     let selectedCategory = document.getElementById("tagCategories");
     addedTag.addEventListener("keydown", (e) => {
         if (e.key == "Enter" && addedTag.value != ""){
-            switch (selectedCategory.value) {
+            switch (selectedCategory.value) { 
+            //adds the new tag to the category determined by the <select> element, which has the id of "tagCategories"
+            //switch cases match the option chosen in the tagCategories <select> element
                 case "appliance":
-                    appliances.unshift(addedTag.value);
+                    appliances.unshift(addedTag.value); //unshift adds the input value into the associated array
                     applianceContainer[0] = document.createElement("div");
                     applianceContainer[0].classList.add("filterClass", "applianceFilterClass");
                     applianceContainer[0].innerHTML += "<h4 style=\"font-weight: bold\">" + appliances[0] + "</h4>" + "<button>Include</button>" + "<button>Exclude</button>" /*+ "<button>Add to Favorites</button>"*/;

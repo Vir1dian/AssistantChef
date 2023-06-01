@@ -100,7 +100,7 @@ const recipeArticles = [
         source: 'None'
     },
     {
-        dish: '',
+        dish: 'PLACEHOLDER',
         time: hMStoSeconds(0,0,0),
         filterTags: [''],
         thumbnail: '',
@@ -118,8 +118,6 @@ const recipeArticles = [
         source: ''
     },*/
 ]
-const recipeTitles = recipeArticles.map((recipe) => {return recipe.dish});
-alanBtnInstance.setVisualState({recipeTitles}); //Allows the recipe dish names to be accessed in Alan Studio :D
 
 //Converts recipeArticles array into html elements injected into the recipes section of the website
 const recipeArticleWebList = document.querySelector(".recipeList");
@@ -190,8 +188,26 @@ function hMStoSeconds(hrs,mins,secs) {
 }
 
 
-
-
-
-    let values = ["pasta", "burger", "quesadilla"]
-    alanBtnInstance.setVisualState({values});
+//VOICE AI CONNECTION
+var alanBtnInstance = alanBtn({
+    key: "6915d0b78830b6418aaeed56891e1b6a2e956eca572e1d8b807a3e2338fdd0dc/stage",
+    onCommand: function (commandData) {
+    if (commandData.command === "go:back") {
+        //call client code that will react on the received command
+    }
+    if (commandData.command === "search") {
+        
+    }
+    },
+    onButtonState: async function(status) {
+        if (status === 'ONLINE') {
+            if (!this.greetingWasSaid) {
+                await alanBtnInstance.activate();
+                alanBtnInstance.playText("Hello! I'm Alan. How can I help you?");
+                alanBtnInstance.setVisualState({recipeArticles});
+                this.greetingWasSaid = true
+            }
+        }
+    },
+    rootEl: document.getElementById("alan-btn"),
+});
