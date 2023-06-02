@@ -27,15 +27,44 @@ onVisualState((p, s) => {
     }
 });
 
-intent('(Search for|Look for|Find|) (a recipe|) (of|for|) $(ITEM~ v:recipeNames)', 
-       '(Search for|Look for|Find) (a recipe) (of|for) $(UNAVAILABLE_ITEM* .*)',
+intent('(Search for|Look for|Find|Is there a recipe for|) (a recipe|) (of|for|) $(ITEM~ v:recipeNames)', 
+       '(Search for|Look for|Find|Is there a recipe for) (a recipe) (of|for) $(UNAVAILABLE_ITEM* .*)',
        p => {
     if (p.UNAVAILABLE_ITEM) {
         p.play('This recipe is unavailable');
     } else {
-        p.play(`Found a recipe (of|for) ${p.ITEM.value}`);
         recognizeRecipe(p, p.ITEM.value);
+        p.play({command: 'alanSearch', data: selectedRecipe});
+        p.play(`Found a recipe (of|for) ${p.ITEM.value}`);
+        p.then(recipeActions);
     }
+});
+
+let recipeActions = context(() => {
+    intent('(How much time|how long) (should|must|to) (I|this|it) (cook|make|take) (this|it|) for?', 
+           '(What is the|) time to (cook|make) (this|it|)?',
+           p => {
+        p.play(`The time it will take to (cook|make) ${recipeDishList[selectedRecipeIndex]} is ` + secondsToHMS(recipeTimeList[selectedRecipeIndex]));
+        p.then(recipeActions);
+    });
+    intent('What (ingredients|items|components|) (do|should|must) I (need|have)?', 'What are the ingredients?', 
+          p => {
+        p.play(`To (cook|make) ${recipeDishList[selectedRecipeIndex]}, (what you'll need is|you should have|you will need) ...` + recipeIngredientsList[selectedRecipeIndex]);
+        p.then(recipeActions);
+    });
+    intent('What (do|are the directions) (I need to|should I|must I) (do|follow)?', 'What are the directions?', 
+          p => {
+        p.play(`Here are the (instructions|directions) for ${recipeDishList[selectedRecipeIndex]}`);
+        p.play(recipeInstructionsList[selectedRecipeIndex].replace(/<br>./g, ""));
+    });
+    intent('(Find|I want) (to browse|) (another recipe|a different recipe|something else) (for me|)', '(Change|browse for a new) (the|my|) recipe', 
+          p => {
+        p.play('(Sure|Okay), what (is the new recipe|would you like)?');
+        selectedRecipeIndex = null;
+        selectedRecipe = "";
+        p.play({command: 'alanSearch', data: selectedRecipe});
+        p.resetContext();
+    });
 });
 
 intent('What is the time to (cook|make) $(ITEM~ v:recipeNames)?', 
@@ -52,24 +81,26 @@ intent('What is the time to (cook|make) $(ITEM~ v:recipeNames)?',
 });
 
 intent('What (do I need|ingredients should I get) to (make|cook) $(ITEM~ v:recipeNames)?', 
+       '(Read|find|What are) (the|) ingredients (for|to make|used in) $(ITEM~ v:recipeNames)',
        'What (do I need|ingredients should I get) to (make|cook) $(UNAVAILABLE_ITEM* .*)',
+       '(Read|find|What are) (the|) ingredients (for|to make|used in) $(UNAVAILABLE_ITEM* .*)',
        p => {
     if (p.UNAVAILABLE_ITEM) {
         p.play('This recipe is unavailable');
     } else {
-        recognizeRecipe(p, p.ITEM.value);
-        p.play(`To (cook|make) ${p.ITEM.value}, (what you'll need is|you should have|you will need) ` + recipeIngredientsList[selectedRecipeIndex]);
+        recognizeRecipe(p, p.ITEM.value); 
+        p.play(`To (cook|make) ${p.ITEM.value}, (what you'll need is|you should have|you will need) ...` + recipeIngredientsList[selectedRecipeIndex]);
     }
 });
 
-intent('Read (the|) (instructions|directions) (for|in|of) $(ITEM~ v:recipeNames)', 
-       'Read (the|) (instructions|directions) (for|in|of) $(UNAVAILABLE_ITEM* .*)',
+intent('(Read|What are) (the|) (instructions|directions) (for|in|of) $(ITEM~ v:recipeNames)', 
+       '(Read|What are) (the|) (instructions|directions) (for|in|of) $(UNAVAILABLE_ITEM* .*)',
        p => {
     if (p.UNAVAILABLE_ITEM) {
         p.play('This recipe is unavailable');
     } else {
         recognizeRecipe(p, p.ITEM.value);
-        p.play(`Here are the instructions for ${p.ITEM.value}`);
+        p.play(`Here are the (instructions|directions) for ${p.ITEM.value}`);
         p.play(recipeInstructionsList[selectedRecipeIndex].replace(/<br>./g, "")); 
         //replaceAll() was not recognized as a function, used replace() with a regex instead
     }
@@ -77,7 +108,7 @@ intent('Read (the|) (instructions|directions) (for|in|of) $(ITEM~ v:recipeNames)
 
 //Helper functions
 
-function recognizeRecipe(p, item) {
+function recognizeRecipe(p, item) { //this function saves the index of the associated recipe in p.ITEM
     //selectedRecipe saves the ITEM value in upper case
     selectedRecipe = item.toUpperCase(); 
     console.log(selectedRecipe); 
