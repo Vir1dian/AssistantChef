@@ -1,50 +1,3 @@
-function filterRecipes() {
-    let filterItem = document.querySelectorAll(".filterClass");
-    let includeButtons = document.querySelectorAll(".includeButton");
-    let excludeButtons = document.querySelectorAll(".excludeButton");
-
-    for (let i = 0; i < filterItem.length; i++) {
-        let includeMatch = false;
-        let excludeMatch = false;
-
-        let tags = filterItem[i].getAttribute("data-tags").toUpperCase();
-
-        for (let i = 0; i < includeButtons.length; i++) {
-            let include = includeButtons[i].getAttribute("data-include").toUpperCase();
-            if (tags.includes(include)) {
-                includeMatch = true;
-                break;
-            }
-        }
-
-        for (let j = 0; j < excludeButtons.length; j++) {
-            let exclude = excludeButtons[j].getAttribute("data-exclude").toUpperCase();
-            if (tags.includes(exclude)) {
-                excludeMatch = true;
-                break;
-            }
-        }
-
-        if (includeMatch && !excludeMatch) {
-            filterItem[i].style.display = "";
-        } else {
-            filterItem[i].style.display = "none";
-        }
-    }
-}
-
-
-function removeClass(element, name) {
-    var i, arr1, arr2;
-    arr1 = element.className.split(" ");
-    arr2 = name.split(" ");
-    for (i = 0; i < arr2.length; i++) {
-         while (arr1.indexOf(arr2[i]) > -1) {
-             arr1.splice(arr1.indexOf(arr2[i]), 1);
-     }
-    }
-    element.className = arr1.join(" ");
-}
 
 function findTag() {
     let find = document.getElementById("findTagsInput").value.toUpperCase();
@@ -69,7 +22,7 @@ let favoritesContainer = []; //Acts as a nodelist (not to be confused with an ar
 for (let i = 0; i < 2; i++) {
     favoritesContainer[i] = document.createElement("div");
     favoritesContainer[i].classList.add("filterClass", "favoriteFilterClass");
-    favoritesContainer[i].innerHTML += "<h4>Favorite " + (1 + i) + "</h4>" + "<button class=\"includeButton\">Include</button>" + "<button class=\"excludeButton\">Exclude</button>" + "<button>Remove from Favorites</button>";
+    favoritesContainer[i].innerHTML += "<h4>Favorite " + (1 + i) + "</h4>" + "<button class=\"includeBtn\">Include</button>" + "<button class=\"excludeBtn\">Exclude</button>" + "<button>Remove from Favorites</button>";
     favoriteFilter.appendChild(favoritesContainer[i]); 
     //Each element in the "-container" nodelist is appended into the html file, inside the div with the class selected by the querySelector at the initial line of this chunk of code
 }
@@ -80,7 +33,7 @@ let appliances = ['Oven', 'Oventop', 'Microwave', 'Airfryer', 'Steamer', 'Pressu
 for (let i = 0; i < appliances.length; i++) {
     applianceContainer[i] = document.createElement("div");
     applianceContainer[i].classList.add("filterClass", "applianceFilterClass");
-    applianceContainer[i].innerHTML += "<h4>" + appliances[i] + "</h4>" + "<button class=\"includeButton\">Include</button>" + "<button class=\"excludeButton\">Exclude</button>" /*+ "<button>Add to Favorites</button>"*/;
+    applianceContainer[i].innerHTML += "<h4>" + appliances[i] + "</h4>" + "<button class=\"includeBtn\">Include</button>" + "<button class=\"excludeBtn\">Exclude</button>" /*+ "<button>Add to Favorites</button>"*/;
     applianceFilter.appendChild(applianceContainer[i]);
     //Each element in the "-container" nodelist is appended into the html file, inside the div with the class selected by the querySelector at the initial line of this chunk of code
 }
@@ -91,7 +44,7 @@ let ingredients = ['Sugar', 'Milk', 'Salt', 'Chicken', 'Olive Oil', 'Soy Sauce',
 for (let i = 0; i < ingredients.length; i++) {
     ingredientContainer[i] = document.createElement("div");
     ingredientContainer[i].classList.add("filterClass", "ingredientFilterClass");
-    ingredientContainer[i].innerHTML += "<h4>" + ingredients[i] + "</h4>" + "<button class=\"includeButton\">Include</button>" + "<button class=\"excludeButton\">Exclude</button>" /*+ "<button>Add to Favorites</button>"*/;
+    ingredientContainer[i].innerHTML += "<h4>" + ingredients[i] + "</h4>" + "<button class=\"includeBtn\">Include</button>" + "<button class=\"excludeBtn\">Exclude</button>" /*+ "<button>Add to Favorites</button>"*/;
     ingredientFilter.appendChild(ingredientContainer[i]);
     //Each element in the "-container" nodelist is appended into the html file, inside the div with the class selected by the querySelector at the initial line of this chunk of code
 }
@@ -101,7 +54,7 @@ let cuisines = ['American', 'Chinese', 'Filipino', 'French', 'Greek', 'Hawaiian'
 for (let i = 0; i < cuisines.length; i++) {
     cuisineContainer[i] = document.createElement("div");
     cuisineContainer[i].classList.add("filterClass", "cuisineFilterClass");
-    cuisineContainer[i].innerHTML += "<h4>" + cuisines[i] + "</h4>" + "<button class=\"includeButton\">Include</button>" + "<button class=\"excludeButton\">Exclude</button>" /*+ "<button>Add to Favorites</button>"*/;
+    cuisineContainer[i].innerHTML += "<h4>" + cuisines[i] + "</h4>" + "<button class=\"includeBtn\">Include</button>" + "<button class=\"excludeBtn\">Exclude</button>" /*+ "<button>Add to Favorites</button>"*/;
     cuisineFilter.appendChild(cuisineContainer[i]);
     //Each element in the "-container" nodelist is appended into the html file, inside the div with the class selected by the querySelector at the initial line of this chunk of code
 }
@@ -139,4 +92,70 @@ function addNewTag() {
             addedTag.value = null;
         }
     });
+}
+
+// Event listener for the include button in appliance filters
+applianceFilter.addEventListener("click", function(event) {
+    if (event.target.classList.contains("includeBtn")) {
+        let clickedTag = event.target.previousElementSibling.innerText;
+        applyFilter(clickedTag, false); // Include recipes with the clicked tag
+    } else if (event.target.classList.contains("excludeBtn")) {
+        let clickedTag = event.target.previousElementSibling.previousElementSibling.innerText;
+        applyFilter(clickedTag, true); // Exclude recipes with the clicked tag
+    }
+})
+  // Event listener for the include button in ingredient filters
+ingredientFilter.addEventListener("click", function(event) {
+    if (event.target.classList.contains("includeBtn")) {
+        let clickedTag = event.target.previousElementSibling.innerText;
+        applyFilter(clickedTag, false); // Include recipes with the clicked tag
+    } else if (event.target.classList.contains("excludeBtn")) {
+        let clickedTag = event.target.previousElementSibling.previousElementSibling.innerText;
+        applyFilter(clickedTag, true); // Exclude recipes with the clicked tag
+    }
+})
+  // Event listener for the include button in cuisine filters
+  cuisineFilter.addEventListener("click", function(event) {
+    if (event.target.classList.contains("includeBtn")) {
+        let clickedTag = event.target.previousElementSibling.innerText;
+        applyFilter(clickedTag, false); // Include recipes with the clicked tag
+    } else if (event.target.classList.contains("excludeBtn")) {
+        let clickedTag = event.target.previousElementSibling.previousElementSibling.innerText;
+        applyFilter(clickedTag, true); // Exclude recipes with the clicked tag
+    }
+})
+function applyFilter(tag, exclude) {
+    // Loop through all recipe items
+    let recipeItems = document.querySelectorAll(".recipe");
+    for (let i = 0; i < recipeItems.length; i++) {
+        let recipeTags = recipeItems[i].querySelectorAll(".recipeTag");
+        let shouldInclude = false;
+
+        // Check if the recipe contains the clicked tag
+        for (let j = 0; j < recipeTags.length; j++) {
+        if (recipeTags[j].innerText === tag) {
+            shouldInclude = true;
+            break;
+        }
+        }
+
+        // Show or hide the recipe item based on the filter result
+        if ((shouldInclude && !exclude) || (!shouldInclude && exclude)) {
+        recipeItems[i].style.display = "";
+        } else {
+        recipeItems[i].style.display = "none";
+        }
+    }
+}
+
+function removeClass(element, name) {
+    var i, arr1, arr2;
+    arr1 = element.className.split(" ");
+    arr2 = name.split(" ");
+    for (i = 0; i < arr2.length; i++) {
+         while (arr1.indexOf(arr2[i]) > -1) {
+             arr1.splice(arr1.indexOf(arr2[i]), 1);
+     }
+    }
+    element.className = arr1.join(" ");
 }

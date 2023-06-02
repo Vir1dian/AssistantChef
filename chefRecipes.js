@@ -133,6 +133,7 @@ for (let i = 0; i < recipeArticles.length; i++) {
     let filterTagsContainer = [];
     for (let j = 0; j < recipeArticles[i].filterTags.length; j++) {
         filterTagsContainer[j] = document.createElement("div");
+        filterTagsContainer[j].classList.add("recipeTag");
         filterTagsContainer[j].innerText = recipeArticles[i].filterTags[j];
         filterTagsCurrent[i].appendChild(filterTagsContainer[j]);
     }
@@ -170,29 +171,36 @@ function hMStoSeconds(hrs,mins,secs) {
     return hrs*3600 + mins*60 + secs;
 }
 
-
-
-function alanSearch(alanRecipe) {
-    let find = alanRecipe.toUpperCase();
-    let recipeItem = document.querySelectorAll(".recipe");
-    let recipeName = document.getElementsByTagName("h2");
-    for (let i = 0; i < recipeName.length; i++){
-        let result = recipeItem[i].getElementsByTagName("h2")[0];
-
-        if(result){
-            let value = result.innerHTML || result.textContent;
-            if(value.toUpperCase().indexOf(find) > -1){
-                recipeItem[i].style.display="";
-            }else{
-                recipeItem[i].style.display="none";
-            }
-        }
-    }
-}
+//VOICE AI FUNCTIONS
 function alanSearch(input) {
     let find = input.toUpperCase();
     document.getElementById("searchInput").value = find;
     search();
+}
+function alanStartTimer(input) {
+    let seconds = input;
+    let originalTimeInSeconds = seconds;
+    startTimer();
+}
+function commitTimer() {
+    let jssetTime = document.getElementById("timerInput");
+    jssetTime.addEventListener("keydown", (e) => {
+        if (e.key == "Enter"){
+            seconds = jssetTime.value;
+            originalTimeInSeconds = seconds;
+            secondsToHMSforTimer();
+            document.getElementById("timer").style.display = "flex";
+            document.getElementById("timerInput").style.display = "none";
+        }
+    });
+}
+function startTimer() {
+    document.getElementById("timer").style.display = "flex";
+    document.getElementById("timerInput").style.display = "none";
+    if (countingTime) {
+        return;
+    }
+    countingTime = setInterval(countdown, 1000);
 }
 
 //VOICE AI CONNECTION
@@ -204,6 +212,9 @@ var alanBtnInstance = alanBtn({
     }
     if (commandData.command === "alanSearch") {
         alanSearch(commandData.data);
+    }
+    if (commandData.command === "alanStartTimer") {
+        alanStartTimer(commandData.data);
     }
     },
     onButtonState: async function(status) {

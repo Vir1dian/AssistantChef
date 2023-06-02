@@ -3,7 +3,7 @@
 var seconds = 300;
 var countingTime = null;
 secondsToHMSforTimer();
-var originalTimeInSeconds = seconds;
+var originalTimeInSeconds = seconds; //Used in resetting the timer
 
 function secondsToHMSforTimer() {
     let hrs = Math.floor(seconds/3600);
