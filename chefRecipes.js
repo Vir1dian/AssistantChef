@@ -16,23 +16,6 @@ function search() {
         }
     }
 }
-function alanSearch(alanRecipe) {
-    let find = alanRecipe.toUpperCase();
-    let recipeItem = document.querySelectorAll(".recipe");
-    let recipeName = document.getElementsByTagName("h2");
-    for (let i = 0; i < recipeName.length; i++){
-        let result = recipeItem[i].getElementsByTagName("h2")[0];
-
-        if(result){
-            let value = result.innerHTML || result.textContent;
-            if(value.toUpperCase().indexOf(find) > -1){
-                recipeItem[i].style.display="";
-            }else{
-                recipeItem[i].style.display="none";
-            }
-        }
-    }
-}
 
 //Add new recipes HERE
 const recipeArticles = [
@@ -96,7 +79,7 @@ const recipeArticles = [
         filterTags: ['Japanese', 'Rice Cooker', 'Rolling Mat', 'Rice', 'Tuna', 'Soy Sauce', 'Cream Cheese', 'Avocado', 'Sriracha', 'Mayonnaise', 'Rice Vinegar', 'Green Onion', 'Sesame Oil', 'Wasabi'],
         thumbnail: 'https://ichisushi.com/wp-content/uploads/2022/07/Best-Spicy-Tuna-Sushi-Recipes.jpg',
         ingredients: 'Sushi Rice (2 cups, cooked), Rice Vinegar (1/4 cup), Seaweed (4 half sheets nori), Tuna (1 can, drained), Mayonnaise (1 1/2 tbsp), Sriracha (1 1/2 tsp), Green Onion, Sesame Oil (1 tsp), Wasabi paste',
-        instructions: '1. Allow rice to cool, mix with rice vinegar. <br> 2. In a small bowl, combine tuna, mayo, sriracha, green onion, and sesame oil. <br> 3. Wrap rolling mat with cling wrap, place one nori sheet (rough side up). <br> 4. Spread thin, even layer of rice on the nori. <br> 5. Add a thin line of tuna filling in the center, following the longer side of the sheet. Add a line of small avocado slices adjacent to it, another with cream cheese. <br> 6. Roll the mat over the filling, squeezing down throughout to maintian a tight roll shape. <br> 7. Cut the roll into even portions with a warm, damp knife. Repeat rolling and cutting process for the remaining nori sheets. <br> 8. Serve with wasabi and soy sauce.',
+        instructions: '1. Allow rice to cool, mix with rice vinegar. <br> 2. In a small bowl, combine tuna, mayo, sriracha, green onion, and sesame oil. <br> 3. Wrap rolling mat with cling wrap, place one nori sheet (rough side up). <br> 4. Spread thin, even layer of rice on the nori. <br> 5. Add a thin line of tuna filling in the center, following the longer side of the sheet. Add a line of small avocado slices adjacent to it, another with cream cheese. <br> 6. Roll the mat over the filling, squeezing down throughout to maintain a tight roll shape. <br> 7. Cut the roll into even portions with a warm, damp knife. Repeat rolling and cutting process for the remaining nori sheets. <br> 8. Serve with wasabi and soy sauce.',
         source: 'None'
     },
     {
@@ -188,6 +171,30 @@ function hMStoSeconds(hrs,mins,secs) {
 }
 
 
+
+function alanSearch(alanRecipe) {
+    let find = alanRecipe.toUpperCase();
+    let recipeItem = document.querySelectorAll(".recipe");
+    let recipeName = document.getElementsByTagName("h2");
+    for (let i = 0; i < recipeName.length; i++){
+        let result = recipeItem[i].getElementsByTagName("h2")[0];
+
+        if(result){
+            let value = result.innerHTML || result.textContent;
+            if(value.toUpperCase().indexOf(find) > -1){
+                recipeItem[i].style.display="";
+            }else{
+                recipeItem[i].style.display="none";
+            }
+        }
+    }
+}
+function alanSearch(input) {
+    let find = input.toUpperCase();
+    document.getElementById("searchInput").value = find;
+    search();
+}
+
 //VOICE AI CONNECTION
 var alanBtnInstance = alanBtn({
     key: "6915d0b78830b6418aaeed56891e1b6a2e956eca572e1d8b807a3e2338fdd0dc/stage",
@@ -195,8 +202,8 @@ var alanBtnInstance = alanBtn({
     if (commandData.command === "go:back") {
         //call client code that will react on the received command
     }
-    if (commandData.command === "search") {
-        
+    if (commandData.command === "alanSearch") {
+        alanSearch(commandData.data);
     }
     },
     onButtonState: async function(status) {
