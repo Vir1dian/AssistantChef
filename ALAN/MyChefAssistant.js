@@ -27,8 +27,8 @@ onVisualState((p, s) => {
     }
 });
 
-intent('(Search for|Look for|Find|Is there a recipe for|) (a recipe|) (of|for|) $(ITEM~ v:recipeNames)', 
-       '(Search for|Look for|Find|Is there a recipe for) (a recipe) (of|for) $(UNAVAILABLE_ITEM* .*)',
+intent('(Search for|Look for|Find|Is there|) (a recipe|) (of|for) $(ITEM~ v:recipeNames)', 
+       '(Search for|Look for|Find|Is there) (a recipe) (of|for) $(UNAVAILABLE_ITEM* .*)',
        p => {
     if (p.UNAVAILABLE_ITEM) {
         p.play('This recipe is unavailable');
@@ -41,21 +41,30 @@ intent('(Search for|Look for|Find|Is there a recipe for|) (a recipe|) (of|for|) 
 });
 
 let recipeActions = context(() => {
-    intent('(How much time|how long) (should|must|to) (I|this|it) (cook|make|take) (this|it|) for?', 
-           '(What is the|) time to (cook|make) (this|it|)?',
+    intent('(What is the|) time to (cook|make) (this|it|)?',
            p => {
         p.play(`The time it will take to (cook|make) ${recipeDishList[selectedRecipeIndex]} is ` + secondsToHMS(recipeTimeList[selectedRecipeIndex]));
+        p.play('Would you like to start a timer for this recipe?');
+        p.then(timeThisRecipe);
+        p.then(recipeActions);
+    });
+    intent('(Start|Set|Have) a timer for this recipe', p => {
+        p.play(`(Ok|Got it|Alright), ${secondsToHMS(recipeTimeList[selectedRecipeIndex])} for ${recipeDishList[selectedRecipeIndex]}, starting now.`)
+        p.play({command: 'alanStartTimer', data: recipeTimeList[selectedRecipeIndex]});
         p.then(recipeActions);
     });
     intent('What (ingredients|items|components|) (do|should|must) I (need|have)?', 'What are the ingredients?', 
           p => {
         p.play(`To (cook|make) ${recipeDishList[selectedRecipeIndex]}, (what you'll need is|you should have|you will need) ...` + recipeIngredientsList[selectedRecipeIndex]);
+        p.play('Anything else?')
         p.then(recipeActions);
     });
-    intent('What (do|are the directions) (I need to|should I|must I) (do|follow)?', 'What are the directions?', 
+    intent('What (do|are the directions) (I need to|should I|must I) (do|follow)?', '(What are|Read) the directions', 
           p => {
         p.play(`Here are the (instructions|directions) for ${recipeDishList[selectedRecipeIndex]}`);
         p.play(recipeInstructionsList[selectedRecipeIndex].replace(/<br>./g, ""));
+        p.play('Anything else?')
+        p.then(recipeActions);
     });
     intent('(Find|I want) (to browse|) (another recipe|a different recipe|something else) (for me|)', '(Change|browse for a new) (the|my|) recipe', 
           p => {
@@ -67,6 +76,16 @@ let recipeActions = context(() => {
     });
 });
 
+let timeThisRecipe = context(() => {
+    intent('Yes', p => {
+        p.play(`(Ok|Got it|Alright), starting timer for ${secondsToHMS(recipeTimeList[selectedRecipeIndex])}`);
+        p.play({command: 'alanStartTimer', data: recipeTimeList[selectedRecipeIndex]});
+        p.play('Anything else?')
+    });
+    intent('No', p => {
+        p.play('(Ok|Got it|Alright), anything else?')
+    });
+});
 
 intent('What is the time to (cook|make) $(ITEM~ v:recipeNames)?', 
        'How (long|much time) (will it take|does it take|) to (cook|make) $(ITEM~ v:recipeNames)?',
@@ -78,6 +97,9 @@ intent('What is the time to (cook|make) $(ITEM~ v:recipeNames)?',
     } else {
         recognizeRecipe(p, p.ITEM.value);
         p.play(`The time it will take to (cook|make) ${p.ITEM.value} is ` + secondsToHMS(recipeTimeList[selectedRecipeIndex]));
+        p.play('Would you like to start a timer for this recipe?');
+        p.then(timeThisRecipe);
+        p.then(recipeActions);
     }
 });
 
@@ -91,6 +113,7 @@ intent('What (do I need|ingredients should I get) to (make|cook) $(ITEM~ v:recip
     } else {
         recognizeRecipe(p, p.ITEM.value); 
         p.play(`To (cook|make) ${p.ITEM.value}, (what you'll need is|you should have|you will need) ...` + recipeIngredientsList[selectedRecipeIndex]);
+        p.then(recipeActions);
     }
 });
 
@@ -104,6 +127,7 @@ intent('(Read|What are) (the|) (instructions|directions) (for|in|of) $(ITEM~ v:r
         p.play(`Here are the (instructions|directions) for ${p.ITEM.value}`);
         p.play(recipeInstructionsList[selectedRecipeIndex].replace(/<br>./g, "")); 
         //replaceAll() was not recognized as a function, used replace() with a regex instead
+        p.then(recipeActions);
     }
 });
 
