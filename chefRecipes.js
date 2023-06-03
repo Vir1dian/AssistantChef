@@ -177,51 +177,34 @@ function alanSearch(input) {
     document.getElementById("searchInput").value = find;
     search();
 }
-function alanStartTimer(input) {
-    let seconds = input;
-    let originalTimeInSeconds = seconds;
-    startTimer();
-}
-function commitTimer() {
-    let jssetTime = document.getElementById("timerInput");
-    jssetTime.addEventListener("keydown", (e) => {
-        if (e.key == "Enter"){
-            seconds = jssetTime.value;
-            originalTimeInSeconds = seconds;
-            secondsToHMSforTimer();
-            document.getElementById("timer").style.display = "flex";
-            document.getElementById("timerInput").style.display = "none";
-        }
-    });
-}
-function startTimer() {
-    document.getElementById("timer").style.display = "flex";
-    document.getElementById("timerInput").style.display = "none";
-    if (countingTime) {
-        return;
-    }
-    countingTime = setInterval(countdown, 1000);
-}
 
 //VOICE AI CONNECTION
 var alanBtnInstance = alanBtn({
     key: "6915d0b78830b6418aaeed56891e1b6a2e956eca572e1d8b807a3e2338fdd0dc/stage",
     onCommand: function (commandData) {
-    if (commandData.command === "go:back") {
-        //call client code that will react on the received command
-    }
-    if (commandData.command === "alanSearch") {
-        alanSearch(commandData.data);
-    }
-    if (commandData.command === "alanStartTimer") {
-        alanStartTimer(commandData.data);
-    }
+        if (commandData.command === "go:back") {
+            //call client code that will react on the received command
+        }
+        if (commandData.command === "alanSearch") {
+            alanSearch(commandData.data);
+        }
+        if (commandData.command === "alanStartTimer") {
+            alanStartTimer(commandData.data);
+        }
+        if (commandData.command === "alanPauseTimer") {
+            pauseTimer();
+        }
+        if (commandData.command === "alanResumeTimer") {
+            startTimer();
+        }
+        if (commandData.command === "alanResetTimer") {
+            resetTimer();
+        }
     },
     onButtonState: async function(status) {
         if (status === 'ONLINE') {
             if (!this.greetingWasSaid) {
                 await alanBtnInstance.activate();
-                alanBtnInstance.playText("Hello! I'm Alan. How can I help you?");
                 alanBtnInstance.setVisualState({recipeArticles});
                 this.greetingWasSaid = true
             }

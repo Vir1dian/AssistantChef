@@ -48,6 +48,7 @@ for (let i = 0; i < ingredients.length; i++) {
     ingredientFilter.appendChild(ingredientContainer[i]);
     //Each element in the "-container" nodelist is appended into the html file, inside the div with the class selected by the querySelector at the initial line of this chunk of code
 }
+
 const cuisineFilter = document.querySelector(".cuisineTags");
 let cuisineContainer = []; //Acts as a nodelist (not to be confused with an array) to contain div elements created by the following for-loop
 let cuisines = ['American', 'Chinese', 'Filipino', 'French', 'Greek', 'Hawaiian', 'Indian', 'Italian', 'Japanese', 'Korean', 'Spanish'];
@@ -94,6 +95,8 @@ function addNewTag() {
     });
 }
 
+
+//Sai: Main filtering functionality
 // Event listener for the include button in appliance filters
 applianceFilter.addEventListener("click", function(event) {
     if (event.target.classList.contains("includeBtn")) {
@@ -115,7 +118,7 @@ ingredientFilter.addEventListener("click", function(event) {
     }
 })
   // Event listener for the include button in cuisine filters
-  cuisineFilter.addEventListener("click", function(event) {
+cuisineFilter.addEventListener("click", function(event) {
     if (event.target.classList.contains("includeBtn")) {
         let clickedTag = event.target.previousElementSibling.innerText;
         applyFilter(clickedTag, false); // Include recipes with the clicked tag
@@ -124,38 +127,73 @@ ingredientFilter.addEventListener("click", function(event) {
         applyFilter(clickedTag, true); // Exclude recipes with the clicked tag
     }
 })
-function applyFilter(tag, exclude) {
-    // Loop through all recipe items
-    let recipeItems = document.querySelectorAll(".recipe");
-    for (let i = 0; i < recipeItems.length; i++) {
-        let recipeTags = recipeItems[i].querySelectorAll(".recipeTag");
-        let shouldInclude = false;
 
-        // Check if the recipe contains the clicked tag
-        for (let j = 0; j < recipeTags.length; j++) {
-        if (recipeTags[j].innerText === tag) {
-            shouldInclude = true;
-            break;
-        }
-        }
+let inTags = document.querySelector(".inTags");
+let exTags = document.querySelector(".exTags");
+let includedTagsList = []; //Contains all selected tags that filter to include recipes
+let excludedTagsList = []; //Contains all selected tags that filter to exclude recipes
 
-        // Show or hide the recipe item based on the filter result
-        if ((shouldInclude && !exclude) || (!shouldInclude && exclude)) {
-        recipeItems[i].style.display = "";
-        } else {
-        recipeItems[i].style.display = "none";
+function applyFilter(input, exclude) {
+    
+    displayAsSelectedTag(input, exclude);
+    hideSelectedTagHome(input, true);
+
+    for (let i; i < recipeArticles.length; i++) {
+        for (let j; j < recipeArticles.filterTags.length; j++) {
+            //MULTI TAG FUNCTIONALITY HERE
+        }
+    }
+
+}
+function displayAsSelectedTag(input, condition) { //Shows the selected tag in a separate div in the filter section for easier tracking
+    if (condition == false) {
+        includedTagsList.push(input);
+        includedTag = document.createElement("div");
+        includedTag.classList.add("includedTag");
+        includedTag.innerHTML += "<h5>" + input + "</h5>" + "<button class=\"removeBtn\">Remove</button>";
+        inTags.appendChild(includedTag);
+    } else {
+        excludedTagsList.push(input);
+        excludedTag = document.createElement("div");
+        excludedTag.classList.add("excludedTag");
+        excludedTag.innerHTML += "<h5>" + input + "</h5>" + "<button class=\"removeBtn\">Remove</button>";
+        exTags.appendChild(excludedTag);
+    }
+}
+//Hides the original tag in which the selected tag was found while it remains in the selected tags div, shows it if the selected tag was removed
+function hideSelectedTagHome(input, shouldHide) { 
+    let filterItem = document.querySelectorAll(".filterClass");
+    let filterName = document.getElementsByTagName("h4");
+    for (let i = 0; i < filterName.length; i++){
+        let result = filterItem[i].getElementsByTagName("h4")[0];
+        if (result.innerText == input && shouldHide){
+            filterItem[i].style.display="none";
+        } 
+        if (result.innerText == input && !shouldHide) {
+            filterItem[i].style.display="";
         }
     }
 }
-
-function removeClass(element, name) {
-    var i, arr1, arr2;
-    arr1 = element.className.split(" ");
-    arr2 = name.split(" ");
-    for (i = 0; i < arr2.length; i++) {
-         while (arr1.indexOf(arr2[i]) > -1) {
-             arr1.splice(arr1.indexOf(arr2[i]), 1);
-     }
+//Functionality for removing selected include tags
+inTags.addEventListener("click", function(event) { 
+    if (event.target.classList.contains("removeBtn")) {
+        let clickedTagDiv = event.target.parentElement;
+        let clickedTag = event.target.previousElementSibling.innerText;
+        let clickedTagIndex = includedTagsList.indexOf(clickedTag);
+        includedTagsList.splice(clickedTagIndex, clickedTagIndex + 1);
+        clickedTagDiv.remove();
+        hideSelectedTagHome(clickedTag, false);
+        removeFilter(clickedTag, false);
     }
-    element.className = arr1.join(" ");
-}
+})
+exTags.addEventListener("click", function(event) {
+    if (event.target.classList.contains("removeBtn")) {
+        let clickedTagDiv = event.target.parentElement;
+        let clickedTag = event.target.previousElementSibling.innerText;
+        let clickedTagIndex = excludedTagsList.indexOf(clickedTag);
+        excludedTagsList.splice(clickedTagIndex, clickedTagIndex + 1);
+        clickedTagDiv.remove();
+        hideSelectedTagHome(clickedTag, false);
+        removeFilter(clickedTag, true);
+    }
+})
