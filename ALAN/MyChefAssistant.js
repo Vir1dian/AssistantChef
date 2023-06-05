@@ -27,7 +27,7 @@ onVisualState((p, s) => {
     }
 });
 
-intent('(Search for|Look for|Find|Is there|) (a recipe|) (of|for) $(ITEM~ v:recipeNames)', 
+intent('(Search for|Look for|Find|Is there) (a recipe) (of|for) $(ITEM~ v:recipeNames)', 
        '(Search for|Look for|Find|Is there) (a recipe) (of|for) $(UNAVAILABLE_ITEM* .*)',
        p => {
     if (p.UNAVAILABLE_ITEM) {
