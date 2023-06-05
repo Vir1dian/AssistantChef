@@ -77,5 +77,3 @@ function secondsToHMSstring(h, m, s) { //returns a string that divides time into
     return time;
 }
 
-
-

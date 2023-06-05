@@ -35,7 +35,7 @@ intent('(Search for|Look for|Find|Is there) (a recipe) (of|for) $(ITEM~ v:recipe
     } else {
         recognizeRecipe(p, p.ITEM.value);
         p.play({command: 'alanSearch', data: selectedRecipe});
-        p.play(`Found a recipe (of|for) ${p.ITEM.value}`);
+        p.play(`(Found|There is) a recipe (of|for) ${p.ITEM.value}`);
         p.then(recipeActions);
     }
 });
@@ -75,6 +75,7 @@ let recipeActions = context(() => {
         p.resetContext();
     });
 });
+
 
 let timeThisRecipe = context(() => {
     intent('Yes', p => {

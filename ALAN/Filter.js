@@ -1,11 +1,13 @@
+let filtersSlot;
 onVisualState((p, s) => {
     if (s.allFilters) { //USE AN ARRAY OF THE FILTERS
         p.visual.filterNames = { en: ""};
         p.visual.filterNames.en = s.allFilters.join('|');
+        //filtersSlot = p.visual.filterNames.en;
+        //console.log(filtersSlot); //causes errors
         console.log(p.visual); 
         console.log(s.allFilters);
         console.log(p.visual.filterNames.en);
-        //
     }
 });
 
