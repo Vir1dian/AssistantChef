@@ -125,10 +125,10 @@ aside h3 {
     overflow-y: scroll;
 }
 .favoriteTags {
-    color:red;
+    display: none;
 }
 .customCookingTime {
-    color: red;
+    display: none;
 }
 
 

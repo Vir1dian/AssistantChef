@@ -1,4 +1,5 @@
 //Finds recipes as the user types into the searchbar for specific recipes
+
 function search() { 
     let find = document.getElementById("searchInput").value.toUpperCase();
     let recipeItem = document.querySelectorAll(".recipe");
@@ -19,15 +20,6 @@ function search() {
 
 //Add new recipes HERE
 const recipeArticles = [
-    {
-        dish: 'Cereal Bowl - Corn Flakes',
-        time: hMStoSeconds(0,1,0),
-        filterTags: ['Milk', 'Corn'],
-        thumbnail: 'https://images.healthshots.com/healthshots/en/uploads/2022/11/23093822/cornflakes-1600x900.jpg',
-        ingredients: 'Milk (1 cup), Corn Flakes Cereal (1 1/2 cups)',
-        instructions: '1. Add dry corn flakes onto a small bowl. <br> 2. Pour milk onto small bowl. <br> 3. Serve with spoon.',
-        source: 'None'
-    },
     {
         dish: 'Cheese Pizza',
         time: hMStoSeconds(1,40,0), 
@@ -57,12 +49,12 @@ const recipeArticles = [
     },
     {
         dish: 'Chicken Adobo',
-        time: hMStoSeconds(0,0,0),
-        filterTags: ['Filipino', 'Oventop', 'Chicken'],
-        thumbnail: '',
-        ingredients: '',
-        instructions: '',
-        source: ''
+        time: hMStoSeconds(2,0,0),
+        filterTags: ['Filipino', 'Oventop', 'Refrigerator', 'Chicken', 'Vinegar', 'Soy Sauce', 'Garlic', 'Black Pepper', 'Bay Leaves'],
+        thumbnail: 'https://christieathome.com/wp-content/uploads/2020/09/Chicken-Adobo-6.jpg',
+        ingredients: 'Chicken (4-5 lbs, thighs), Vinegar (1/2 cups), Soy Sauce (1/2 cups), Garlic (4 cloves, crushed), Black Pepper (1 tsp), Bay Leaves (3)',
+        instructions: '1. Combine chicken thighs, vinegar, soy sauce, garlic, black pepper, and bay leaves in a large pot. <br> 2. Cover and marinate the chicken in the refrigerator for 1 to 3 hours. <br> 3. Bring chicken to a boil over high heat. Then, lower heat, cover, and simmer for 30 minutes, stirring occasionally. <br> 4. Remove the lid and simmer until the sauce is reduced and thickened and the chicken is tender, in about 20 more minutes. <br> 5. Serve.',
+        source: 'https://www.foodnetwork.com/recipes/filipino-chicken-adobo-recipe-1955818'
     },
     {
         dish: 'Paneer Masala',
@@ -83,13 +75,13 @@ const recipeArticles = [
         source: 'None'
     },
     {
-        dish: 'PLACEHOLDER',
-        time: hMStoSeconds(0,0,0),
-        filterTags: [''],
-        thumbnail: '',
-        ingredients: '',
-        instructions: '',
-        source: ''
+        dish: 'Cereal Bowl - Corn Flakes',
+        time: hMStoSeconds(0,1,0),
+        filterTags: ['Milk', 'Corn'],
+        thumbnail: 'https://images.healthshots.com/healthshots/en/uploads/2022/11/23093822/cornflakes-1600x900.jpg',
+        ingredients: 'Milk (1 cup), Corn Flakes Cereal (1 1/2 cups)',
+        instructions: '1. Add dry corn flakes onto a small bowl. <br> 2. Pour milk onto small bowl. <br> 3. Serve with spoon.',
+        source: 'None'
     }/*,
     {
         dish: '',
@@ -99,7 +91,7 @@ const recipeArticles = [
         ingredients: '',
         instructions: '',
         source: ''
-    },*/
+    }*/
 ]
 
 //Converts recipeArticles array into html elements injected into the recipes section of the website
@@ -207,15 +199,45 @@ function startTimer() {
 var alanBtnInstance = alanBtn({
     key: "6915d0b78830b6418aaeed56891e1b6a2e956eca572e1d8b807a3e2338fdd0dc/stage",
     onCommand: function (commandData) {
-    if (commandData.command === "go:back") {
-        //call client code that will react on the received command
-    }
-    if (commandData.command === "alanSearch") {
-        alanSearch(commandData.data);
-    }
-    if (commandData.command === "alanStartTimer") {
-        alanStartTimer(commandData.data);
-    }
+        if (commandData.command === "go:back") {
+            //call client code that will react on the received command
+        }
+        if (commandData.command === "alanSearch") {
+            alanSearch(commandData.data);
+        }
+        if (commandData.command === "alanStartTimer") {
+            alanStartTimer(commandData.data);
+        }
+        if (commandData.command === "alanPauseTimer") {
+            pauseTimer();
+        }
+        if (commandData.command === "alanResumeTimer") {
+            startTimer();
+        }
+        if (commandData.command === "alanResetTimer") {
+            resetTimer();
+        }
+        if (commandData.command === "alanInclude") {
+            useFilter(commandData.data, false);
+        }
+        if (commandData.command === "alanExclude") {
+            useFilter(commandData.data, true);
+        }
+        if (commandData.command === "alanRemoveFilter") {
+            if (includedTagsList.includes(commandData.data)) {
+                removeFilter(commandData.data, false);
+                hideSelectedTagHome(commandData.data, false);
+                alanRemoveButton(commandData.data, false);
+            }
+            if (excludedTagsList.includes(commandData.data)) {
+                removeFilter(commandData.data, true);
+                hideSelectedTagHome(commandData.data, false);
+                alanRemoveButton(commandData.data, true);
+            }
+        }
+        if (commandData.command === "alanClearFilters") {
+            clearTags();
+        }
     },
     onButtonState: async function(status) {
         if (status === 'ONLINE') {
@@ -223,6 +245,7 @@ var alanBtnInstance = alanBtn({
                 await alanBtnInstance.activate();
                 alanBtnInstance.playText("Hello! I'm Alan. How can I help you?");
                 alanBtnInstance.setVisualState({recipeArticles});
+                alanBtnInstance.setVisualState({allFilters});
                 this.greetingWasSaid = true
             }
         }

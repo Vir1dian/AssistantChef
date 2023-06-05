@@ -59,6 +59,8 @@ for (let i = 0; i < cuisines.length; i++) {
     //Each element in the "-container" nodelist is appended into the html file, inside the div with the class selected by the querySelector at the initial line of this chunk of code
 }
 
+let allFilters = appliances.concat(ingredients, cuisines); 
+
 function addNewTag() {
     let addedTag = document.getElementById("addTagsInput");
     let selectedCategory = document.getElementById("tagCategories");
@@ -98,30 +100,30 @@ function addNewTag() {
 applianceFilter.addEventListener("click", function(event) {
     if (event.target.classList.contains("includeBtn")) {
         let clickedTag = event.target.previousElementSibling.innerText;
-        applyFilter(clickedTag, false); // Include recipes with the clicked tag
+        useFilter(clickedTag, false); // Include recipes with the clicked tag
     } else if (event.target.classList.contains("excludeBtn")) {
         let clickedTag = event.target.previousElementSibling.previousElementSibling.innerText;
-        applyFilter(clickedTag, true); // Exclude recipes with the clicked tag
+        useFilter(clickedTag, true); // Exclude recipes with the clicked tag
     }
 })
   // Event listener for the include button in ingredient filters
 ingredientFilter.addEventListener("click", function(event) {
     if (event.target.classList.contains("includeBtn")) {
         let clickedTag = event.target.previousElementSibling.innerText;
-        applyFilter(clickedTag, false); // Include recipes with the clicked tag
+        useFilter(clickedTag, false); // Include recipes with the clicked tag
     } else if (event.target.classList.contains("excludeBtn")) {
         let clickedTag = event.target.previousElementSibling.previousElementSibling.innerText;
-        applyFilter(clickedTag, true); // Exclude recipes with the clicked tag
+        useFilter(clickedTag, true); // Exclude recipes with the clicked tag
     }
 })
   // Event listener for the include button in cuisine filters
   cuisineFilter.addEventListener("click", function(event) {
     if (event.target.classList.contains("includeBtn")) {
         let clickedTag = event.target.previousElementSibling.innerText;
-        applyFilter(clickedTag, false); // Include recipes with the clicked tag
+        useFilter(clickedTag, false); // Include recipes with the clicked tag
     } else if (event.target.classList.contains("excludeBtn")) {
         let clickedTag = event.target.previousElementSibling.previousElementSibling.innerText;
-        applyFilter(clickedTag, true); // Exclude recipes with the clicked tag
+        useFilter(clickedTag, true); // Exclude recipes with the clicked tag
     }
 })
 function applyFilter(tag, exclude) {
@@ -131,31 +133,139 @@ function applyFilter(tag, exclude) {
         let recipeTags = recipeItems[i].querySelectorAll(".recipeTag");
         let shouldInclude = false;
 
-        // Check if the recipe contains the clicked tag
-        for (let j = 0; j < recipeTags.length; j++) {
-        if (recipeTags[j].innerText === tag) {
-            shouldInclude = true;
-            break;
-        }
-        }
+let inTags = document.querySelector(".inTags");
+let exTags = document.querySelector(".exTags");
+let includedTagsList = []; //Contains all selected tags that filter to include recipes
+let excludedTagsList = []; //Contains all selected tags that filter to exclude recipes
 
-        // Show or hide the recipe item based on the filter result
-        if ((shouldInclude && !exclude) || (!shouldInclude && exclude)) {
-        recipeItems[i].style.display = "";
-        } else {
-        recipeItems[i].style.display = "none";
+//Revised version of Sai's useFilter method to include functionality by multiple filters simultaneously
+function useFilter(input, exclude) {
+    displayAsSelectedTag(input, exclude);
+    hideSelectedTagHome(input, true);
+    applyFilter(input, exclude);
+}
+//Connects the filters to the recipes
+function applyFilter(input, exclude) {
+    let recipeItems = document.querySelectorAll(".recipe");
+    for (let i = 0; i < recipeItems.length; i++) {
+        let tagWasFound = recipeArticles[i].filterTags.includes(input);
+        // Edited version: adds applied tags to respective arrays
+        if (tagWasFound && exclude) {
+            recipeItems[i].style.display = "none";
+        }
+        if (!tagWasFound && !exclude) {
+            recipeItems[i].style.display = "none";
         }
     }
 }
-
-function removeClass(element, name) {
-    var i, arr1, arr2;
-    arr1 = element.className.split(" ");
-    arr2 = name.split(" ");
-    for (i = 0; i < arr2.length; i++) {
-         while (arr1.indexOf(arr2[i]) > -1) {
-             arr1.splice(arr1.indexOf(arr2[i]), 1);
-     }
+//Shows the selected tag in a separate div in the filter section for easier tracking
+function displayAsSelectedTag(input, condition) { 
+    if (condition == false) {
+        includedTagsList.push(input);
+        includedTag = document.createElement("div");
+        includedTag.classList.add("selectedTag", "includedTag");
+        includedTag.innerHTML += "<h5>" + input + "</h5>" + "<button class=\"removeBtn\">Remove</button>";
+        inTags.appendChild(includedTag);
+    } else {
+        excludedTagsList.push(input);
+        excludedTag = document.createElement("div");
+        excludedTag.classList.add("selectedTag", "excludedTag");
+        excludedTag.innerHTML += "<h5>" + input + "</h5>" + "<button class=\"removeBtn\">Remove</button>";
+        exTags.appendChild(excludedTag);
     }
-    element.className = arr1.join(" ");
 }
+//Hides the original tag in which the selected tag was found while it remains in the selected tags div, shows it if the selected tag was removed
+function hideSelectedTagHome(input, shouldHide) { 
+    let filterItem = document.querySelectorAll(".filterClass");
+    let filterName = document.getElementsByTagName("h4");
+    for (let i = 0; i < filterName.length; i++){
+        let result = filterItem[i].getElementsByTagName("h4")[0];
+        if (result.innerText == input && shouldHide){
+            filterItem[i].style.display="none";
+        } 
+        if (result.innerText == input && !shouldHide) {
+            filterItem[i].style.display="";
+        }
+    }
+}
+//Functionality for removing selected include tags
+function clearTags() {
+    let selectedTags = document.querySelectorAll(".selectedTag");
+    let filterItem = document.querySelectorAll(".filterClass");
+    let recipes = document.querySelectorAll(".recipe");
+    for (let i = selectedTags.length - 1; i >= 0; i--) {
+        selectedTags[i].remove();
+    }
+    for (let i = 0; i < filterItem.length; i++) {
+        filterItem[i].style.display="";
+    }
+    for (let i = 0; i < recipes.length; i++) {
+        recipes[i].style.display="";
+    }
+}
+inTags.addEventListener("click", function(event) { 
+    if (event.target.classList.contains("removeBtn")) {
+        let clickedTagDiv = event.target.parentElement;
+        let clickedTag = event.target.previousElementSibling.innerText;
+        clickedTagDiv.remove();
+        hideSelectedTagHome(clickedTag, false);
+        removeFilter(clickedTag, false);
+    }
+})
+exTags.addEventListener("click", function(event) {
+    if (event.target.classList.contains("removeBtn")) {
+        let clickedTagDiv = event.target.parentElement;
+        let clickedTag = event.target.previousElementSibling.innerText;
+        clickedTagDiv.remove();
+        hideSelectedTagHome(clickedTag, false);
+        removeFilter(clickedTag, true);
+    }
+})
+function alanRemoveButton(input, exclude) {
+    if (!exclude) {
+        let includedTags = document.querySelectorAll(".includedTag");
+        for (let i = 0; i < includedTags.length; i++) {
+            if (includedTags[i].innerText.indexOf(input) > -1) {
+                includedTags[i].remove();
+                break;
+            }
+        }
+    }
+    if (exclude) {
+        let excludedTags = document.querySelectorAll(".excludedTag");
+        for (let i = 0; i < excludedTags.length; i++) {
+            if (excludedTags[i].innerText.indexOf(input) > -1) {
+                excludedTags[i].remove();
+                break;
+            }
+        }
+    }
+}
+function removeFilter(input, exclude) {
+    let recipeItems = document.querySelectorAll(".recipe");
+    for (let i = 0; i < recipeItems.length; i++) {
+        //Returns an array with all the values the recipe tags and the current included tags have in common
+        let connectedInTags = recipeArticles[i].filterTags.filter(value => includedTagsList.includes(value)); 
+        //Returns an array with all the values the recipe tags and the current excluded tags have in common
+        let connectedExTags = recipeArticles[i].filterTags.filter(value => excludedTagsList.includes(value));
+        console.log(connectedInTags, connectedExTags);
+        //Check if the recipe contains the clicked tag
+        let tagWasFound = recipeArticles[i].filterTags.includes(input);
+        if (!tagWasFound && !exclude) {
+            if (connectedInTags.length === 0) { //Checks if there is no other tags currently filtering this recipe before revealing it again
+                recipeItems[i].style.display = "";
+            }
+        }
+        if (tagWasFound && exclude) {
+            if (connectedExTags.length === 0) { //Checks if there is no other tags currently filtering this recipe before revealing it again
+                recipeItems[i].style.display = "";
+            }
+        }
+        let inTagIndex = includedTagsList.indexOf(input);
+        includedTagsList.splice(inTagIndex, inTagIndex + 1); //Removes the removed tag from includedTagsList
+        let exTagIndex = excludedTagsList.indexOf(input);
+        excludedTagsList.splice(exTagIndex, exTagIndex + 1); //Removes the removed tag from excludedTagsList
+    }
+}
+    
+
