@@ -82,6 +82,15 @@ const recipeArticles = [
         ingredients: 'Milk (1 cup), Corn Flakes Cereal (1 1/2 cups)',
         instructions: '1. Add dry corn flakes onto a small bowl. <br> 2. Pour milk onto small bowl. <br> 3. Serve with spoon.',
         source: 'None'
+    },
+    {
+        dish: 'Chicken Gyros with Tzaziki',
+        time: hMStoSeconds(0,26,0),
+        filterTags: [''],
+        thumbnail: '',
+        ingredients: 'Chicken (2lbs or )',
+        instructions: '',
+        source: 'https://www.recipetineats.com/greek-chicken-gyros-with-tzatziki/'
     }/*,
     {
         dish: '',
@@ -91,7 +100,7 @@ const recipeArticles = [
         ingredients: '',
         instructions: '',
         source: ''
-    }*/
+    },*/
 ]
 
 //Converts recipeArticles array into html elements injected into the recipes section of the website
@@ -169,35 +178,10 @@ function alanSearch(input) {
     document.getElementById("searchInput").value = find;
     search();
 }
-function alanStartTimer(input) {
-    let seconds = input;
-    let originalTimeInSeconds = seconds;
-    startTimer();
-}
-function commitTimer() {
-    let jssetTime = document.getElementById("timerInput");
-    jssetTime.addEventListener("keydown", (e) => {
-        if (e.key == "Enter"){
-            seconds = jssetTime.value;
-            originalTimeInSeconds = seconds;
-            secondsToHMSforTimer();
-            document.getElementById("timer").style.display = "flex";
-            document.getElementById("timerInput").style.display = "none";
-        }
-    });
-}
-function startTimer() {
-    document.getElementById("timer").style.display = "flex";
-    document.getElementById("timerInput").style.display = "none";
-    if (countingTime) {
-        return;
-    }
-    countingTime = setInterval(countdown, 1000);
-}
 
 //VOICE AI CONNECTION
 var alanBtnInstance = alanBtn({
-    key: "6915d0b78830b6418aaeed56891e1b6a2e956eca572e1d8b807a3e2338fdd0dc/stage",
+    key: "5eb422371b89b8438aaeed56891e1b6a2e956eca572e1d8b807a3e2338fdd0dc/stage",
     onCommand: function (commandData) {
         if (commandData.command === "go:back") {
             //call client code that will react on the received command
@@ -243,9 +227,7 @@ var alanBtnInstance = alanBtn({
         if (status === 'ONLINE') {
             if (!this.greetingWasSaid) {
                 await alanBtnInstance.activate();
-                alanBtnInstance.playText("Hello! I'm Alan. How can I help you?");
-                alanBtnInstance.setVisualState({recipeArticles});
-                alanBtnInstance.setVisualState({allFilters});
+                alanBtnInstance.setVisualState({recipeArticles, allFilters});
                 this.greetingWasSaid = true
             }
         }

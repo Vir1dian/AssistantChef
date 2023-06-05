@@ -67,3 +67,9 @@ function resetTimer() {
     seconds = originalTimeInSeconds;
     secondsToHMSforTimer();
 }
+function alanStartTimer(input) {
+    seconds = input;
+    originalTimeInSeconds = seconds;
+    secondsToHMSforTimer();
+    startTimer();
+}
