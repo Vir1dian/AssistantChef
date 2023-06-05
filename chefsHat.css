@@ -101,8 +101,26 @@ aside h3 {
     font-size: 18px;
     width: 50%;
 }
-#tagCategories {
-    margin-bottom: 10px;
+#clearAllTags {
+    margin: 5px 10px;
+    font-size: 18px;
+}
+.selectedTags {
+    border: 0;
+    padding: 0;
+}
+.selectedTags div {
+    border: 0;
+    display: flex;
+    padding: 0;
+    margin-top: 6px;
+}
+.selectedTags div h5 {
+    border: 0;
+    font-size: 14px;
+    display: flex;
+    padding: 0;
+    margin: 0;
 }
 .filterClass {
     padding: 3px;

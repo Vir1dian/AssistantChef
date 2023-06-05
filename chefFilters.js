@@ -126,13 +126,19 @@ ingredientFilter.addEventListener("click", function(event) {
         useFilter(clickedTag, true); // Exclude recipes with the clicked tag
     }
 })
-function applyFilter(tag, exclude) {
-    // Loop through all recipe items
+function applyFilter(input, exclude) {
     let recipeItems = document.querySelectorAll(".recipe");
     for (let i = 0; i < recipeItems.length; i++) {
-        let recipeTags = recipeItems[i].querySelectorAll(".recipeTag");
-        let shouldInclude = false;
-
+        let tagWasFound = recipeArticles[i].filterTags.includes(input);
+        // Edited version: adds applied tags to respective arrays
+        if (tagWasFound && exclude) {
+            recipeItems[i].style.display = "none";
+        }
+        if (!tagWasFound && !exclude) {
+            recipeItems[i].style.display = "none";
+        }
+    }
+}
 let inTags = document.querySelector(".inTags");
 let exTags = document.querySelector(".exTags");
 let includedTagsList = []; //Contains all selected tags that filter to include recipes
@@ -267,5 +273,3 @@ function removeFilter(input, exclude) {
         excludedTagsList.splice(exTagIndex, exTagIndex + 1); //Removes the removed tag from excludedTagsList
     }
 }
-    
-
